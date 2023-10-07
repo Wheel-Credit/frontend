@@ -1,27 +1,41 @@
-# WheelCreditFrontend
+<div align="center">
+  <img src="/src/assets/logo.png" alt="Logo Wheel Credit" height="180">
+  <h3 align="center">Wheel Credit - Backend</h3>
+  <p>Finanzas UPC · 2023</p>
+</div>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.
+---
 
-## Development server
+# Proyecto de Financiamiento en Perú
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este proyecto tiene como objetivo desarrollar una aplicación web o móvil que facilite el proceso de otorgamiento de créditos vehiculares en el contexto financiero de Perú. La aplicación se basa en el método francés vencido ordinario, conocido como "Compra Inteligente," y proporciona una solución versátil para transacciones en Soles y Dólares, adaptándose a diferentes tasas de interés.
 
-## Code scaffolding
+## Características Clave
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Calculadora de Plan de Pagos: Realiza cálculos precisos de los pagos basados en el método francés vencido ordinario.
+- Configuración Flexible: Permite a los usuarios ajustar aspectos clave como períodos de gracia totales o parciales.
+- Autenticación Segura: Garantiza la seguridad y privacidad de los datos de los usuarios a través de un sistema de inicio de sesión con credenciales válidas.
+- Base de Datos Completa: Mantiene una base de datos completa con información de clientes y detalles de la oferta vehicular, incluyendo cálculos de VAN y TIR.
+- Cumplimiento Regulatorio: Cumple con todos los estándares de transparencia y divulgación requeridos por la normativa financiera peruana.
 
-## Build
+## Capturas de Pantalla
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+A continuación, se presentan algunas imágenes que muestran diferentes páginas de la aplicación:
 
-## Running unit tests
+<div>
+    <h3>User Access - Log In</h3>
+    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Logo Wheel Credit" height="180">
+    <p>Aqui el usuario se podra registrar en la applicación.</p>
+    <br/>
+    <h3>User Access - Sign Up</h3>
+    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Logo Wheel Credit" height="180">
+    <p>Aqui el usuario se podra registrar en la applicación.</p>
+    <br/>
+    <h3>Page not found (404)</h3>
+    <img src="/src/assets/github.png" alt="Logo Wheel Credit" height="180">
+    <p>Aqui el usuario se podra registrar en la applicación.</p>
+<div/>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Licencia
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Este proyecto está bajo la Licencia MIT. Para obtener más información, consulta el archivo [LICENSE](https://chat.openai.com/c/LICENSE) .
