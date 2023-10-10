@@ -10,9 +10,9 @@ import { UserAccessComponent } from './components/home/user-access/user-access.c
 import { HomeComponent } from './views/home/home.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { UserAccessViewComponent } from './views/user-access-view/user-access-view.component';
-import { UserAccess2Component } from './components/home/user-access2/user-access2.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { HeaderComponent } from './components/shared/header/header.component';
+import { HomePageComponent } from './components/home/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,9 @@ import { HeaderComponent } from './components/shared/header/header.component';
     HomeComponent,
     PageNotFoundComponent,
     UserAccessViewComponent,
-    UserAccess2Component,
     FooterComponent,
     HeaderComponent,
+    HomePageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule],
   providers: [],
