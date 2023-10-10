@@ -312,3 +312,9 @@ button {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+
+.errorMessage {
+  color: rgb(175, 29, 29) !important;
+  font-size: 9px !important;
+  margin-left: 5px !important;
+}
