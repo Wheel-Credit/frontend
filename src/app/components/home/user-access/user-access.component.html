@@ -12,8 +12,16 @@
           >
             * Required
           </span>
+          <span
+            class="errorMessage"
+            *ngIf="loginForm?.get('emailLoginControl')?.hasError('email')"
+            [@flashErrorMessage]="flashError ? 'hide' : 'show'"
+          >
+            * Invalid
+          </span>
           <input
             type="email"
+            [(ngModel)]="emailLoginControl"
             formControlName="emailLoginControl"
             name="emailLoginControl"
           />
@@ -29,6 +37,7 @@
           </span>
           <input
             type="password"
+            [(ngModel)]="passwordLoginControl"
             formControlName="passwordLoginControl"
             name="passwordLoginControl"
           />
@@ -37,6 +46,9 @@
           Sign In
         </button>
       </form>
+      <p *ngIf="incorrectLogin" class="forgot-pass forgot-login">
+        Email or password is incorrect
+      </p>
       <p class="forgot-pass">Forgot Password ?</p>
       <div class="social-media">
         <ul>
@@ -107,6 +119,15 @@
           </label>
           <label>
             <span>Email</span>
+            <span
+              class="errorMessage"
+              *ngIf="
+                signupForm?.get('emailSignUpControl')?.hasError('required')
+              "
+              [@flashErrorMessage]="flashError ? 'hide' : 'show'"
+            >
+              * Required
+            </span>
             <span
               class="errorMessage"
               *ngIf="signupForm?.get('emailSignUpControl')?.hasError('email')"

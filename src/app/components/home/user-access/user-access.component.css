@@ -109,7 +109,12 @@ button {
 }
 
 .forgot-pass:hover {
-  color: red;
+  color: #c42525;
+}
+
+.forgot-login {
+  font-size: 10px !important;
+  color: #c42525 !important;
 }
 
 .social-media {

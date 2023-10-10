@@ -33,7 +33,6 @@ export class UserAccessComponent {
   signupForm: FormGroup;
   loginForm: FormGroup;
 
-  rightPanelActive: boolean = false;
   user!: UserModule;
   nameControl: string = '';
   lastNameControl: string = '';
@@ -43,8 +42,10 @@ export class UserAccessComponent {
   emailLoginControl: string = '';
   passwordLoginControl: string = '';
 
+  rightPanelActive: boolean = false;
   requiredInfo: boolean = false;
   flashError = false;
+  incorrectLogin = false;
 
   constructor(
     private authService: AuthService,
@@ -89,17 +90,18 @@ export class UserAccessComponent {
 
   onSubmitLogin() {
     if (this.validateLogIn()) return;
-    this.user.name = this.nameControl;
-    this.user.password = this.passwordSignUpControl;
+
+    this.user.email = this.emailLoginControl;
+    this.user.password = this.passwordLoginControl;
+
     this.authService.login(this.user).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.access_token);
         localStorage.setItem('id', response.user_id);
-        console.log(response);
         this.router.navigate(['/home']);
       },
       (error: any) => {
-        console.log('aaaaa ' + error);
+        this.incorrectLogin = true;
       }
     );
   }
