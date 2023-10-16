@@ -13,6 +13,8 @@ import { UserAccessViewComponent } from './views/user-access-view/user-access-vi
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
+import { PaymentFormViewComponent } from './views/payment-form-view/payment-form-view.component';
+import { PaymentHistoryViewComponent } from './views/payment-history-view/payment-history-view.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { HomePageComponent } from './components/home/home-page/home-page.compone
     FooterComponent,
     HeaderComponent,
     HomePageComponent,
+    PaymentFormViewComponent,
+    PaymentHistoryViewComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule],
   providers: [],
