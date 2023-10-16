@@ -1,4 +1,7 @@
-<div *ngIf="valideUser">Hi User</div>
+<div *ngIf="valideUser" class="main">
+  <a [routerLink]="'/form'">Form</a>
+  <a [routerLink]="'/history'">History</a>
+</div>
 
 <div *ngIf="!valideUser">
   <div class="container">
