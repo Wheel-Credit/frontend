@@ -1,0 +1,319 @@
+<form class="form" [formGroup]="smartPaymentForm">
+  <p>Datos a Ingresar</p>
+
+  <div class="flex">
+    <div class="form-group">
+      <label for="sellingPriceAsset">Precio de Venta del Activo</label>
+      <input
+        type="number"
+        class="form-control"
+        id="sellingPriceAsset"
+        required
+        (input)="updateFormReadiness()"
+        formControlName="sellingPriceAsset"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="planType">Tipo de plan de pagos</label>
+      <select
+        required
+        id="planType"
+        class="form-control"
+        formControlName="paymentPlanType"
+        (input)="updateFormReadiness()"
+      >
+        <option>24</option>
+        <option>36</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="sellingPriceAsset">Cuota Inicial</label>
+      <input
+        type="number"
+        class="form-control"
+        id="initialInstallment"
+        required
+        formControlName="initialInstallment"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="interestRate">Tasa de Interés</label>
+      <input
+        type="number"
+        class="form-control"
+        id="interestRate"
+        required
+        formControlName="interestRate"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="interestType">Tipo de tasa de Interés</label>
+      <select
+        required
+        id="interestType"
+        class="form-control"
+        formControlName="interestType"
+        (input)="updateFormReadiness()"
+      >
+        <option>TNA</option>
+        <option>TEA</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="capitalization">Periodo de capitalización</label>
+      <select
+        required
+        id="capitalization"
+        class="form-control"
+        formControlName="capitalization"
+        (input)="updateFormReadiness()"
+      >
+        <option>Diaria</option>
+        <option>Mensual</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="paymentFrequency">Frecuencia de pago</label>
+      <input
+        required
+        id="paymentFrequency"
+        formControlName="paymentFrequency"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+  </div>
+
+  <!-- 
+        Costos y gastos Iniciales
+      -->
+
+  <hr />
+  <p>Costos y gastos Iniciales</p>
+
+  <div class="flex">
+    <div>
+      <label for="notaryCosts">Costes Notariales</label>
+      <input
+        id="notaryCosts"
+        formControlName="notaryCosts"
+        type="number"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="notaryCostsType">Tipo de pago</label>
+        <select
+          id="notaryCostsType"
+          class="form-control"
+          formControlName="notaryCostsType"
+        >
+          <option>Efectivo</option>
+          <option>Prestamo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div>
+      <label for="registrationCosts">Costes Registrales</label>
+      <input
+        id="registrationCosts"
+        formControlName="registrationCosts"
+        type="number"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="registrationCostsType">Tipo de pago</label>
+        <select
+          id="registrationCostsType"
+          class="form-control"
+          formControlName="registrationCostsType"
+        >
+          <option>Efectivo</option>
+          <option>Prestamo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div>
+      <label for="appraisal">Tasación</label>
+      <input
+        id="appraisal"
+        naformControlNameme="appraisal"
+        type="number"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="appraisalType">Tipo de pago</label>
+        <select
+          id="appraisalType"
+          class="form-control"
+          formControlName="appraisalType"
+        >
+          <option>Efectivo</option>
+          <option>Prestamo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div>
+      <label for="studyCommission">Comisión de estudio</label>
+      <input
+        id="studyCommission"
+        formControlName="studyCommission"
+        type="number"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="studyCommissionType">Tipo de pago</label>
+        <select
+          id="studyCommissionType"
+          class="form-control"
+          formControlName="studyCommissionType"
+        >
+          <option>Efectivo</option>
+          <option>Prestamo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div>
+      <label for="activationCommission">Comisión de activación</label>
+      <input
+        id="activationCommission"
+        formControlName="activationCommission"
+        type="number"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="activationCommissionType">Tipo de pago</label>
+        <select
+          id="activationCommissionType"
+          class="form-control"
+          formControlName="activationCommissionType"
+        >
+          <option>Efectivo</option>
+          <option>Prestamo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <p>Costos y gastos Periodicos</p>
+  <div class="flex">
+    <div class="form-group">
+      <label for="gps">GPS</label>
+      <input
+        required
+        id="gps"
+        formControlName="gps"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="shippingCosts">Portes</label>
+      <input
+        required
+        id="shippingCosts"
+        formControlName="shippingCosts"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+    <div class="form-group">
+      <label for="administrativeExpenses">Gastos de Administración</label>
+      <input
+        required
+        id="administrativeExpenses"
+        formControlName="administrativeExpenses"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lifeInsurance">% de Seguro de Desgravamen</label>
+      <input
+        required
+        id="lifeInsurance"
+        formControlName="lifeInsurance"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="riskInsurance">% de Seguro de Riesgo</label>
+      <input
+        required
+        id="riskInsurance"
+        formControlName="riskInsurance"
+        type="number"
+        class="form-control"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+  </div>
+
+  <hr />
+  <p>Costo de oportunidad</p>
+
+  <div class="form-group ml-10px">
+    <label for="discountRate">Tasa de descuento</label>
+    <input
+      required
+      id="discountRate"
+      formControlName="discountRate"
+      type="number"
+      class="form-control"
+      (input)="updateFormReadiness()"
+    />
+  </div>
+
+  <!-- 
+        Button
+      -->
+
+  <button
+    type="button"
+    class="btn btn-default ml-10px"
+    [class.green_button]="formReady"
+    [class.red_button]="!formReady"
+    (click)="onSubmit()"
+  >
+    Create Table
+  </button>
+</form>
