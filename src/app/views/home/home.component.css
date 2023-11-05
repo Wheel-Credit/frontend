@@ -61,3 +61,7 @@ a:hover {
   cursor: pointer;
   background-color: #413d3d;
 }
+
+.minHieght {
+  min-height: 90vh;
+}
