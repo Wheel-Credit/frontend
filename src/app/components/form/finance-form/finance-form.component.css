@@ -40,6 +40,14 @@ button {
   transition: 0.3s;
 }
 
+button:active,
+button:enabled,
+button:focus,
+button:visited {
+  color: white;
+  border: none;
+}
+
 .green_button {
   background-color: #42a948;
 }
