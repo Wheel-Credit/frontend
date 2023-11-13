@@ -5,8 +5,10 @@ import {
   Validators,
   ValidationErrors,
 } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SmartPayment } from 'src/app/model/samrtPayment.model';
+import { SmartPayment } from 'src/app/model/smartPayment.model';
+import { TableComponent } from '../table/table.component';
 
 @Component({
   selector: 'app-finance-form',
@@ -20,7 +22,11 @@ export class FinanceFormComponent {
 
   planType = [24, 36];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.smartPaymentForm = this.fb.group({
       sellingPriceAsset: [null, Validators.required],
       paymentPlanType: [24, Validators.required],
@@ -55,5 +61,11 @@ export class FinanceFormComponent {
   onSubmit() {
     console.log(this.formReady);
     console.log(this.smartPaymentForm.value);
+    const dialogRef: MatDialogRef<TableComponent> = this.dialog.open(
+      TableComponent,
+      {
+        data: { formValues: this.smartPaymentForm.value },
+      }
+    );
   }
 }

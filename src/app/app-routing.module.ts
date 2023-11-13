@@ -9,7 +9,7 @@ import { PaymentHistoryViewComponent } from './views/payment-history-view/paymen
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'user-access', component: UserAccessViewComponent },
+  { path: 'auth', component: UserAccessViewComponent },
   { path: 'form', component: PaymentFormViewComponent },
   { path: 'history', component: PaymentHistoryViewComponent },
   { path: '**', component: PageNotFoundComponent },
