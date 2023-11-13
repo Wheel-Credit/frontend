@@ -15,6 +15,9 @@ import { HeaderComponent } from './components/shared/header/header.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
 import { PaymentFormViewComponent } from './views/payment-form-view/payment-form-view.component';
 import { PaymentHistoryViewComponent } from './views/payment-history-view/payment-history-view.component';
+import { FinanceFormComponent } from './components/form/finance-form/finance-form.component';
+import { HeaderUnsignedComponent } from './components/shared/header-unsigned/header-unsigned.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -28,8 +31,10 @@ import { PaymentHistoryViewComponent } from './views/payment-history-view/paymen
     HomePageComponent,
     PaymentFormViewComponent,
     PaymentHistoryViewComponent,
+    FinanceFormComponent,
+    HeaderUnsignedComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
 })
