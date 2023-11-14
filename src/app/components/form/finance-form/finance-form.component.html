@@ -41,6 +41,18 @@
     </div>
 
     <div class="form-group">
+      <label for="sellingPriceAsset">Cuota Final</label>
+      <input
+        type="number"
+        class="form-control"
+        id="initialInstallment"
+        required
+        formControlName="initialInstallment"
+        (input)="updateFormReadiness()"
+      />
+    </div>
+
+    <div class="form-group">
       <label for="interestRate">Tasa de Interés</label>
       <input
         type="number"
