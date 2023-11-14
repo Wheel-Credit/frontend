@@ -3,6 +3,7 @@ export class SmartPayment {
     public sellingPriceAsset: number | null = null,
     public paymentPlanType: number | null = null,
     public initialInstallment: number | null = null,
+    public finalInstallment: number | null = null,
     public interestRate: number | null = null,
     public interestType: string = '',
     public capitalization: string = '',
