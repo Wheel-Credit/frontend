@@ -29,6 +29,6 @@ export class HomeComponent {
   }
 
   redirectToSignIn() {
-    this.router.navigate(['/user-access']);
+    this.router.navigate(['/auth']);
   }
 }

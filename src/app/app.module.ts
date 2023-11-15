@@ -18,6 +18,7 @@ import { PaymentHistoryViewComponent } from './views/payment-history-view/paymen
 import { FinanceFormComponent } from './components/form/finance-form/finance-form.component';
 import { HeaderUnsignedComponent } from './components/shared/header-unsigned/header-unsigned.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TableComponent } from './components/form/table/table.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PaymentHistoryViewComponent,
     FinanceFormComponent,
     HeaderUnsignedComponent,
+    TableComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule, NgbModule],
   providers: [],
