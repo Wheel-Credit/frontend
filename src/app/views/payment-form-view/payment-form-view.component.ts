@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./payment-form-view.component.css'],
 })
 export class PaymentFormViewComponent {
+  loading: boolean = true;
   valideUser: boolean = true;
 
   constructor(private userService: UserService, private router: Router) {}
@@ -16,6 +17,7 @@ export class PaymentFormViewComponent {
     console.log('ngOnInit');
     this.userService.getAuth().subscribe(
       (response) => {
+        this.loading = false;
         if (response) {
           this.valideUser = true;
         } else {
@@ -23,6 +25,7 @@ export class PaymentFormViewComponent {
         }
       },
       (error) => {
+        this.loading = false;
         this.valideUser = false;
       }
     );
