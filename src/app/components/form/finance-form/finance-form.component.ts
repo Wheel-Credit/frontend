@@ -58,14 +58,22 @@ export class FinanceFormComponent {
     this.formReady = this.smartPaymentForm.valid;
   }
 
+  updateSmartPayment() {
+    this.smartPayment = this.smartPaymentForm.value;
+  }
+
   onSubmit() {
-    console.log(this.formReady);
-    console.log(this.smartPaymentForm.value);
+    console.log(this.smartPayment);
+    this.updateSmartPayment();
+    console.log(this.smartPayment);
     const dialogRef: MatDialogRef<TableComponent> = this.dialog.open(
       TableComponent,
       {
-        data: { formValues: this.smartPaymentForm.value },
+        data: { formValues: this.smartPayment },
       }
     );
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

@@ -1,5 +1,3 @@
-import { FormGroup } from '@angular/forms';
-
 export class tableData {
   index: number;
   gracePeriod: string;
@@ -21,7 +19,7 @@ export class tableData {
   flow: number;
 
   constructor(
-    index: number = 0,
+    index: number = 1,
     gracePeriod: string = 'S',
     finalInstallment: number = 0,
     interestFinalInstallment: number = 0,
@@ -58,10 +56,5 @@ export class tableData {
     this.administrativeExpenses = administrativeExpenses;
     this.finalBalanceInstallment = finalBalanceInstallment;
     this.flow = flow;
-  }
-
-  calculateTable(smartPaymentForm: any) {
-    this.index =
-      smartPaymentForm.sellingPriceAsset + smartPaymentForm.paymentPlanType;
   }
 }

@@ -1,26 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SmartPayment } from 'src/app/model/smartPayment.model';
+import { paymentTable } from 'src/app/model/table.model';
 import { tableData } from 'src/app/model/tableData.model';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+const DATA: tableData[] = [
+  new tableData(1, 'S', 0, 0, 0, 0, 0, 0, 0, 0, 102.5, 0, 0, 0, 0, 0, 0, 0),
+  new tableData(2, 'S'),
+  new tableData(3, 'P'),
+  new tableData(4, 'P'),
+  new tableData(5, 'P'),
+  new tableData(6, 'T'),
 ];
 
 @Component({
@@ -29,8 +20,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent {
-  smartPaymentForm: FormGroup;
-  smartPaymentTable = new tableData();
+  smartPaymentForm = new SmartPayment();
+  smartPaymentTable = new paymentTable();
 
   displayedColumns: string[] = [
     'index',
@@ -42,13 +33,18 @@ export class TableComponent {
     'amortizacion',
     'cuota',
   ];
-  dataSource = ELEMENT_DATA;
+  dataSource: tableData[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.smartPaymentForm = data.formValues;
   }
 
   ngOnInit(): void {
-    this.smartPaymentTable.calculateTable(this.smartPaymentForm);
+    this.smartPaymentTable.updatepaymentData(this.smartPaymentForm);
+    for (let index = 0; index < DATA.length; index++) {
+      const element = DATA[index];
+      this.smartPaymentTable.addPayment(element);
+    }
+    this.dataSource = this.smartPaymentTable.getPayments();
   }
 }
