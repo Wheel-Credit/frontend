@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { irr, npv } from 'financial';
 import {
   FormBuilder,
   FormGroup,
@@ -118,7 +119,7 @@ export class FinanceFormComponent {
   //Interes Cuota Final
   FinalInstallmentInterest: number[] = [];
 
-  //Amort. Couta Final
+  //Amort. Cuota Final
   FinalInstallmentAmortization: number[] = [];
 
   //Seguro desgav. Cuota Final
@@ -263,7 +264,7 @@ export class FinanceFormComponent {
     console.log("Pruebas de la tabla")
     console.log("Saldo Inicial Cuota Final: " + this.InitialBalanceFinalInstallment[NumberofMonth])
     console.log("Interes Cuota Final: " + this.FinalInstallmentInterest[NumberofMonth])
-    console.log("Amort. Couta Final: " + this.FinalInstallmentAmortization[NumberofMonth])
+    console.log("Amort. Cuota Final: " + this.FinalInstallmentAmortization[NumberofMonth])
     console.log("Seguro desgav. Cuota Final: " + this.CreditInsuranceFinalInstallment[NumberofMonth])
     console.log("Saldo Final Cuota Final: " + this.FinalBalanceFinalInstallment[NumberofMonth])
     console.log("Saldo Inicial Cuota: " + this.InitialBalanceInstallment[NumberofMonth])
@@ -314,7 +315,7 @@ export class FinanceFormComponent {
     console.log("DiscountRate: " + DiscountRate)
 
     //TIR
-    var TIR = this.getTIR();
+    var TIR = this.getTIR(LoanAmount);
     console.log("TIR: " + TIR)
 
     //TCEA
@@ -322,8 +323,15 @@ export class FinanceFormComponent {
     console.log("TCEA: " + TCEA)
 
     //VAN
-    var VAN = this.getVAN(LoanAmount, Interests);
+    var VAN = this.getVAN(LoanAmount, DiscountRate);
     console.log("VAN: " + VAN)
+
+/*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
+    const npvCalculado = flujosEfectivo.reduce((npv, flujo, t) => npv + (flujo / Math.pow(1 + 0.10, t)), 0);
+    console.log("NPV Calculado manualmente: ", npvCalculado);
+    const npvBiblioteca = npv(0.10, flujosEfectivo);
+    console.log("NPV Calculado con financial library: ", npvBiblioteca); */
+
 
     ////Pruebas
 
@@ -426,7 +434,7 @@ export class FinanceFormComponent {
   getInterests(TotalInstallments: number){
     var Interests = 0;
     for(var i = 0; i < TotalInstallments+1; i++){
-      Interests -= this.Installments[i]-this.Amortization[i]-this.InsuranceCreditInstallment[i];
+      Interests += this.Installments[i]-this.Amortization[i]-this.InsuranceCreditInstallment[i];
     }
     return Interests;
   }
@@ -480,19 +488,29 @@ export class FinanceFormComponent {
   }
 
   getDiscountRate(discountRate: number, paymentFrequency: number){
-    return Math.pow(1+discountRate, paymentFrequency/this.number_of_days_per_year)-1;
+    return Math.pow(1+(discountRate/100), paymentFrequency/this.number_of_days_per_year)-1;
   }
 
-  getTIR(){
-    return 0; //Función de Excel
+  getTIR(LoanAmount: number){
+    const Flow_with_LoanAmount = [LoanAmount, ...this.Flow.map(value => -value)];
+    const TIR = irr(Flow_with_LoanAmount);
+    return TIR;
   }
 
   getTCEA(TIR: number, paymentFrequency: number){
-    return Math.pow(1+TIR, paymentFrequency/this.number_of_days_per_year)-1;
+    return Math.pow(1+TIR, this.number_of_days_per_year/paymentFrequency)-1;
   }
 
-  getVAN(LoanAmount: number, Interests: number){
-    return 0; //Función de Excel
+  getVAN(LoanAmount: number, DiscountRate: number){
+    const Flow_with_LoanAmount = [...this.Flow.map(value => -value)];
+    for(var i = 0; i < Flow_with_LoanAmount.length; i++){
+      console.log("Flow_with_LoanAmount[" + i + "]: " + Flow_with_LoanAmount[i])
+    }
+    console.log("LoanAmount: " + LoanAmount)
+    console.log("DiscountRate: " + DiscountRate)
+    console.log("npv: :" + (npv(DiscountRate, [...this.Flow.map(value => -value)])))
+    
+    return (LoanAmount + npv(DiscountRate, [...this.Flow.map(value => -value)])); 
   }
 
 
@@ -514,28 +532,23 @@ export class FinanceFormComponent {
       //Seguro desgav. Cuota Final
       this.CreditInsuranceFinalInstallment[i] = -this.InitialBalanceFinalInstallment[i]*(PercentageOfReliefInsurance);
 
-      //Amort. Couta Final
+      //Amort. Cuota Final
       if(i == NumberofInstallments-1){
-        this.FinalInstallmentAmortization[i] = -this.InitialBalanceFinalInstallment[i]+this.FinalInstallmentInterest[i]+this.CreditInsuranceFinalInstallment[i];
-        console.log("Prueba 1")
-        console.log("InitialBalanceFinalInstallment[i]: " + this.InitialBalanceFinalInstallment[i])
-        console.log("FinalInstallmentInterest[i]: " + this.FinalInstallmentInterest[i])
-        console.log("CreditInsuranceFinalInstallment[i]: " + this.CreditInsuranceFinalInstallment[i])
-        console.log("FinalInstallmentAmortization[i]: " + this.FinalInstallmentAmortization[i])
+        this.FinalInstallmentAmortization[i] = -parseFloat((-this.InitialBalanceFinalInstallment[i]+this.FinalInstallmentInterest[i]+this.CreditInsuranceFinalInstallment[i]).toFixed(7))
       }
       else{
         this.FinalInstallmentAmortization[i] = 0;
       }
 
       //Saldo Final Cuota Final
-      this.FinalBalanceFinalInstallment[i] = this.InitialBalanceFinalInstallment[i]-this.FinalInstallmentInterest[i]-this.CreditInsuranceFinalInstallment[i]+this.FinalInstallmentAmortization[i];
+      this.FinalBalanceFinalInstallment[i] = parseFloat((this.InitialBalanceFinalInstallment[i]-this.FinalInstallmentInterest[i]-this.CreditInsuranceFinalInstallment[i]+this.FinalInstallmentAmortization[i]).toFixed(7));
     
       //Saldo Inicial Cuota
       if(i == 0){
         this.InitialBalanceInstallment[i] = BalanceToFinanceWithInstallments
       }
       else{
-        if(i<=TotalInstallments){
+        if(i<TotalInstallments){ // <=?
           this.InitialBalanceInstallment[i] = this.FinalBalanceInstallment[i-1];
         }
         else{
@@ -556,13 +569,6 @@ export class FinanceFormComponent {
         }
         if(1){
           this.Installments[i] = this.CalcularPago(TEP, PercentageOfReliefInsurance, TotalInstallments, i+1, this.InitialBalanceInstallment[i]);
-/*           if(i==0){
-            console.log("TEP: " + TEP)
-            console.log("PercentageOfReliefInsurance: " + PercentageOfReliefInsurance)
-            console.log("NumberofInstallments: " + NumberofInstallments)
-            console.log("i: " + i)
-            console.log("InitialBalanceInstallment[i]: " + this.InitialBalanceInstallment[i])
-          } */
         }
       }
       else{
@@ -611,12 +617,6 @@ export class FinanceFormComponent {
       }
       else{
         this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] + this.Amortization[i];
-/*         if(i==35){
-          console.log("Prueba 2")
-          console.log("InitialBalanceInstallment[i]: " + this.InitialBalanceInstallment[i])
-          console.log("Amortization[i]: " + this.Amortization[i])
-          console.log("FinalBalanceInstallment[i]: " + this.FinalBalanceInstallment[i])
-        } */
       }
 
       //Flujo
@@ -643,6 +643,10 @@ export class FinanceFormComponent {
 
   CalcularPago(TEP: number, PercentageOfReliefInsurance: number, NumberofInstallments: number, NumberofCurrentInstallment: number, InitialBalanceInstallment: number){
     // No se porque el "-", en el excel no lo encuentro
+    var divider = 1 - Math.pow(1+(TEP+PercentageOfReliefInsurance),-(NumberofInstallments-NumberofCurrentInstallment+1));
+    if (divider == 0){
+      return 0;
+    }
     return -(InitialBalanceInstallment*(TEP+PercentageOfReliefInsurance))/(1-Math.pow(1+(TEP+PercentageOfReliefInsurance),-(NumberofInstallments-NumberofCurrentInstallment+1)));
   }
 
