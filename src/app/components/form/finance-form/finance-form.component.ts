@@ -110,8 +110,22 @@ export class FinanceFormComponent {
     0.3, // riskInsurance: number | null = null,
     50 //discountRate: number | null = null
   );
+
+  
+  // Lista de Periodos de Gracia
+  CreateListofGracePeriods() {
+    var List_of_Grace_Periods: String[] = [];
+    for(var i = 0; i < this.smartPaymentAux.paymentPlanType!+1; i++){
+      List_of_Grace_Periods.push("S");
+    }
+    return List_of_Grace_Periods;
+  }
+
 ///////////////////////////////////////////////////////////////////////////
+
   //// Variables Globales
+
+  List_of_Grace_Periods: String[] = [];
 
   //Saldo inicial Cuota Final
   InitialBalanceFinalInstallment: number[] = [];
@@ -171,6 +185,19 @@ export class FinanceFormComponent {
 
   Algorithm() {
     console.log('La función Algorithm se está ejecutando...');
+
+    this.List_of_Grace_Periods = this.CreateListofGracePeriods();
+/*     for(var i = 0; i < this.List_of_Grace_Periods.length; i++){
+      console.log("List_of_Grace_Periods[" + i + "]: " + this.List_of_Grace_Periods[i])
+    } */
+
+    //Prueba
+    this.List_of_Grace_Periods[0] = "T";
+    this.List_of_Grace_Periods[1] = "T";
+    this.List_of_Grace_Periods[2] = "T";
+    this.List_of_Grace_Periods[3] = "P";
+    this.List_of_Grace_Periods[4] = "P";
+    this.List_of_Grace_Periods[5] = "P";
 
     //TEA
     var TEA = this.GetTEA(
@@ -501,16 +528,23 @@ export class FinanceFormComponent {
     return Math.pow(1+TIR, this.number_of_days_per_year/paymentFrequency)-1;
   }
 
-  getVAN(LoanAmount: number, DiscountRate: number){
+  getVAN(LoanAmount: number, DiscountRate: number): number {
     const Flow_with_LoanAmount = [...this.Flow.map(value => -value)];
-    for(var i = 0; i < Flow_with_LoanAmount.length; i++){
-      console.log("Flow_with_LoanAmount[" + i + "]: " + Flow_with_LoanAmount[i])
+  
+    // Imprimir flujos de efectivo para depuración
+    for (let i = 0; i < Flow_with_LoanAmount.length; i++) {
+      console.log(`Flow_with_LoanAmount[${i}]: ${Flow_with_LoanAmount[i]}`);
     }
-    console.log("LoanAmount: " + LoanAmount)
-    console.log("DiscountRate: " + DiscountRate)
-    console.log("npv: :" + (npv(DiscountRate, [...this.Flow.map(value => -value)])))
-    
-    return (LoanAmount + npv(DiscountRate, [...this.Flow.map(value => -value)])); 
+  
+    console.log(`LoanAmount: ${LoanAmount}`);
+    console.log(`DiscountRate: ${DiscountRate}`);
+  
+    // Calcular el NPV utilizando la función npv de la biblioteca financiera
+    const npvResult = npv(DiscountRate, Flow_with_LoanAmount);
+    console.log(`npv: ${npvResult}`);
+  
+    // Retornar el resultado, que es la suma del préstamo y el NPV
+    return LoanAmount + npvResult;
   }
 
 
@@ -541,7 +575,7 @@ export class FinanceFormComponent {
       }
 
       //Saldo Final Cuota Final
-      this.FinalBalanceFinalInstallment[i] = parseFloat((this.InitialBalanceFinalInstallment[i]-this.FinalInstallmentInterest[i]-this.CreditInsuranceFinalInstallment[i]+this.FinalInstallmentAmortization[i]).toFixed(7));
+      this.FinalBalanceFinalInstallment[i] = parseFloat((this.InitialBalanceFinalInstallment[i]-this.FinalInstallmentInterest[i]-this.CreditInsuranceFinalInstallment[i]-this.FinalInstallmentAmortization[i]).toFixed(7));
     
       //Saldo Inicial Cuota
       if(i == 0){
@@ -561,13 +595,13 @@ export class FinanceFormComponent {
     
       //Cuota (inc Seg Des)
       if(i<=NumberofInstallments-1){
-        if(0){ // En caso que sea un Plazo de Gracia Total
+        if(this.List_of_Grace_Periods[i]=="T"){ // En caso que sea un Plazo de Gracia Total
           this.Installments[i] = 0;
         }
-        if(0){
+        else if(this.List_of_Grace_Periods[i]=="P"){
           this.Installments[i] = this.Interest[i];
         }
-        if(1){
+        else{
           this.Installments[i] = this.CalcularPago(TEP, PercentageOfReliefInsurance, TotalInstallments, i+1, this.InitialBalanceInstallment[i]);
         }
       }
@@ -580,7 +614,7 @@ export class FinanceFormComponent {
 
       //Amort.
       if(i<=NumberofInstallments-1){
-        if(0){ // En caso que sea un Plazo de Gracia Total o Parcial
+        if(this.List_of_Grace_Periods[i]=="T" || this.List_of_Grace_Periods[i]=="P"){ // En caso que sea un Plazo de Gracia Total o Parcial
           this.Amortization[i] = 0;
         }
         else{
@@ -612,20 +646,20 @@ export class FinanceFormComponent {
       }
 
       //Saldo Final para Cuota
-      if(0){ // Si es un Plazo de Gracia Total
-        this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] + this.Interest[i];
+      if(this.List_of_Grace_Periods[i]=="T"){ // Si es un Plazo de Gracia Total
+        this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] - this.Interest[i];
       }
       else{
         this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] + this.Amortization[i];
       }
 
       //Flujo
-      if(0){ // Si es un Plazo de Gracia Total o Parcial
+      if(this.List_of_Grace_Periods[i]=="T"||this.List_of_Grace_Periods[i]=="P" ){ // Si es un Plazo de Gracia Total o Parcial
         if(i==NumberofInstallments-1){
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]+this.InsuranceCreditInstallment[i]+this.FinalInstallmentAmortization[i];
+          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]-this.InsuranceCreditInstallment[i]+this.FinalInstallmentAmortization[i];
         }
         else{
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]+this.InsuranceCreditInstallment[i];
+          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]-this.InsuranceCreditInstallment[i];
         }
       }
       else{
