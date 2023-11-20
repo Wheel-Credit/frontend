@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SmartPayment } from 'src/app/model/smartPayment.model';
 import { TableComponent } from '../table/table.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-finance-form',
@@ -26,7 +27,8 @@ export class FinanceFormComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.smartPaymentForm = this.fb.group({
       sellingPriceAsset: [null, Validators.required],
@@ -37,19 +39,19 @@ export class FinanceFormComponent {
       interestType: ['TNA', Validators.required],
       capitalization: ['Diaria', Validators.required],
       paymentFrequency: [null, Validators.required],
-      notaryCosts: [null],
+      notaryCosts: [0, Validators.min(0)],
       notaryCostsType: ['Efectivo'],
-      registrationCosts: [null],
+      registrationCosts: [0, Validators.min(0)],
       registrationCostsType: ['Efectivo'],
-      appraisal: [null],
+      appraisal: [0, Validators.min(0)],
       appraisalType: ['Efectivo'],
-      studyCommission: [null],
+      studyCommission: [0, Validators.min(0)],
       studyCommissionType: ['Efectivo'],
-      activationCommission: [null],
+      activationCommission: [0, Validators.min(0)],
       activationCommissionType: ['Efectivo'],
       gps: [null, Validators.required],
       shippingCosts: [null, Validators.required],
-      administrativeExpenses: [null, Validators.required],
+      administrativeExpenses: [null],
       lifeInsurance: [null, Validators.required],
       riskInsurance: [null, Validators.required],
       discountRate: [null, Validators.required],
@@ -67,9 +69,17 @@ export class FinanceFormComponent {
   }
 
   onSubmit() {
-    console.log(this.smartPayment);
     this.updateSmartPayment();
-    console.log(this.smartPayment);
+    if (!this.smartPaymentForm.valid) {
+      this.snackBar.open('Debe ingresar todos los campos requeridos', '', {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
+      return;
+    }
+
     const dialogRef: MatDialogRef<TableComponent> = this.dialog.open(
       TableComponent,
       {
@@ -111,17 +121,16 @@ export class FinanceFormComponent {
     50 //discountRate: number | null = null
   );
 
-  
   // Lista de Periodos de Gracia
   CreateListofGracePeriods() {
     var List_of_Grace_Periods: String[] = [];
-    for(var i = 0; i < this.smartPaymentAux.paymentPlanType!+1; i++){
-      List_of_Grace_Periods.push("S");
+    for (var i = 0; i < this.smartPaymentAux.paymentPlanType! + 1; i++) {
+      List_of_Grace_Periods.push('S');
     }
     return List_of_Grace_Periods;
   }
 
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
   //// Variables Globales
 
@@ -182,22 +191,21 @@ export class FinanceFormComponent {
   // lifeInsurance without %
   number_of_days_per_year = 360;
 
-
   Algorithm() {
     console.log('La función Algorithm se está ejecutando...');
 
     this.List_of_Grace_Periods = this.CreateListofGracePeriods();
-/*     for(var i = 0; i < this.List_of_Grace_Periods.length; i++){
+    /*     for(var i = 0; i < this.List_of_Grace_Periods.length; i++){
       console.log("List_of_Grace_Periods[" + i + "]: " + this.List_of_Grace_Periods[i])
     } */
 
     //Prueba
-    this.List_of_Grace_Periods[0] = "T";
-    this.List_of_Grace_Periods[1] = "T";
-    this.List_of_Grace_Periods[2] = "T";
-    this.List_of_Grace_Periods[3] = "P";
-    this.List_of_Grace_Periods[4] = "P";
-    this.List_of_Grace_Periods[5] = "P";
+    this.List_of_Grace_Periods[0] = 'T';
+    this.List_of_Grace_Periods[1] = 'T';
+    this.List_of_Grace_Periods[2] = 'T';
+    this.List_of_Grace_Periods[3] = 'P';
+    this.List_of_Grace_Periods[4] = 'P';
+    this.List_of_Grace_Periods[5] = 'P';
 
     //TEA
     var TEA = this.GetTEA(
@@ -266,7 +274,7 @@ export class FinanceFormComponent {
     console.log(
       'BalanceToFinanceWithInstallments: ' + BalanceToFinanceWithInstallments
     );
-    
+
     //% de Seguro desgrav. per.
     var PercentageOfReliefInsurance =
       ((this.smartPaymentAux.lifeInsurance! / 100) *
@@ -282,86 +290,117 @@ export class FinanceFormComponent {
     console.log('RiskInsurance: ' + RiskInsurance);
 
     //Tabla
-    this.getTable(FinalInstallment, TEP, this.smartPaymentAux.lifeInsurance!, TotalInstallments!, PercentageOfReliefInsurance, BalanceToFinanceWithInstallments, RiskInsurance)
+    this.getTable(
+      FinalInstallment,
+      TEP,
+      this.smartPaymentAux.lifeInsurance!,
+      TotalInstallments!,
+      PercentageOfReliefInsurance,
+      BalanceToFinanceWithInstallments,
+      RiskInsurance
+    );
 
     //Probar valores de la tabla
     var NumberofMonth = 36; //Recordar que en codigo empieza desde 0
-    console.log("-----------------")
-    console.log("-----------------")
-    console.log("Pruebas de la tabla")
-    console.log("Saldo Inicial Cuota Final: " + this.InitialBalanceFinalInstallment[NumberofMonth])
-    console.log("Interes Cuota Final: " + this.FinalInstallmentInterest[NumberofMonth])
-    console.log("Amort. Cuota Final: " + this.FinalInstallmentAmortization[NumberofMonth])
-    console.log("Seguro desgav. Cuota Final: " + this.CreditInsuranceFinalInstallment[NumberofMonth])
-    console.log("Saldo Final Cuota Final: " + this.FinalBalanceFinalInstallment[NumberofMonth])
-    console.log("Saldo Inicial Cuota: " + this.InitialBalanceInstallment[NumberofMonth])
-    console.log("Interes: " + this.Interest[NumberofMonth])
-    console.log("Cuota (inc Seg Des): " + this.Installments[NumberofMonth])
-    console.log("Amort.: " + this.Amortization[NumberofMonth])
-    console.log("Seguro desg. Cuota: " + this.InsuranceCreditInstallment[NumberofMonth])
-    console.log("Seguro riesgo: " + this.RiskInsuranceTable[NumberofMonth])
-    console.log("GPS: " + this.GPSTable[NumberofMonth])
-    console.log("Portes: " + this.ShippingCostsTable[NumberofMonth])
-    console.log("Gastos Adm.: " + this.AdministrativeExpensesTable[NumberofMonth])
-    console.log("Saldo Final para Cuota: " + this.FinalBalanceInstallment[NumberofMonth])
-    console.log("Flujo: " + this.Flow[NumberofMonth])
-    console.log("-----------------")
-    console.log("-----------------")
-
+    console.log('-----------------');
+    console.log('-----------------');
+    console.log('Pruebas de la tabla');
+    console.log(
+      'Saldo Inicial Cuota Final: ' +
+        this.InitialBalanceFinalInstallment[NumberofMonth]
+    );
+    console.log(
+      'Interes Cuota Final: ' + this.FinalInstallmentInterest[NumberofMonth]
+    );
+    console.log(
+      'Amort. Cuota Final: ' + this.FinalInstallmentAmortization[NumberofMonth]
+    );
+    console.log(
+      'Seguro desgav. Cuota Final: ' +
+        this.CreditInsuranceFinalInstallment[NumberofMonth]
+    );
+    console.log(
+      'Saldo Final Cuota Final: ' +
+        this.FinalBalanceFinalInstallment[NumberofMonth]
+    );
+    console.log(
+      'Saldo Inicial Cuota: ' + this.InitialBalanceInstallment[NumberofMonth]
+    );
+    console.log('Interes: ' + this.Interest[NumberofMonth]);
+    console.log('Cuota (inc Seg Des): ' + this.Installments[NumberofMonth]);
+    console.log('Amort.: ' + this.Amortization[NumberofMonth]);
+    console.log(
+      'Seguro desg. Cuota: ' + this.InsuranceCreditInstallment[NumberofMonth]
+    );
+    console.log('Seguro riesgo: ' + this.RiskInsuranceTable[NumberofMonth]);
+    console.log('GPS: ' + this.GPSTable[NumberofMonth]);
+    console.log('Portes: ' + this.ShippingCostsTable[NumberofMonth]);
+    console.log(
+      'Gastos Adm.: ' + this.AdministrativeExpensesTable[NumberofMonth]
+    );
+    console.log(
+      'Saldo Final para Cuota: ' + this.FinalBalanceInstallment[NumberofMonth]
+    );
+    console.log('Flujo: ' + this.Flow[NumberofMonth]);
+    console.log('-----------------');
+    console.log('-----------------');
 
     //Intereses
     var Interests = this.getInterests(TotalInstallments!);
-    console.log("Interests: " + Interests)
+    console.log('Interests: ' + Interests);
 
     //Amortización del capital
     var CapitalAmortization = this.getCapitalAmortization(TotalInstallments!);
-    console.log("CapitalAmortization: " + CapitalAmortization)
+    console.log('CapitalAmortization: ' + CapitalAmortization);
 
     //Seguro Desgravamen
     var CreditInsurance = this.GetCreditInsurance(TotalInstallments!);
-    console.log("CreditInsurance: " + CreditInsurance)
+    console.log('CreditInsurance: ' + CreditInsurance);
 
     //Seguro contra todo Riesgo
     var InsuranceAllRisk = this.getInsuranceAllRisk(TotalInstallments!);
-    console.log("InsuranceAllRisk: " + InsuranceAllRisk)
+    console.log('InsuranceAllRisk: ' + InsuranceAllRisk);
 
     //GPS
     var GPS = this.getGPS(TotalInstallments!);
-    console.log("GPS: " + GPS)
+    console.log('GPS: ' + GPS);
 
     //Portes
     var ShippingCosts = this.getShippingCosts(TotalInstallments!);
-    console.log("ShippingCosts: " + ShippingCosts)
+    console.log('ShippingCosts: ' + ShippingCosts);
 
     //Gastos Administrativos
-    var AdministrativeExpenses = this.getAdministrativeExpenses(TotalInstallments!);
-    console.log("AdministrativeExpenses: " + AdministrativeExpenses)
+    var AdministrativeExpenses = this.getAdministrativeExpenses(
+      TotalInstallments!
+    );
+    console.log('AdministrativeExpenses: ' + AdministrativeExpenses);
 
     //Tasa de Descuento
-    var DiscountRate = this.getDiscountRate(this.smartPaymentAux.discountRate!, this.smartPaymentAux.paymentFrequency!);
-    console.log("DiscountRate: " + DiscountRate)
+    var DiscountRate = this.getDiscountRate(
+      this.smartPaymentAux.discountRate!,
+      this.smartPaymentAux.paymentFrequency!
+    );
+    console.log('DiscountRate: ' + DiscountRate);
 
     //TIR
     var TIR = this.getTIR(LoanAmount);
-    console.log("TIR: " + TIR)
+    console.log('TIR: ' + TIR);
 
     //TCEA
     var TCEA = this.getTCEA(TIR, this.smartPaymentAux.paymentFrequency!);
-    console.log("TCEA: " + TCEA)
+    console.log('TCEA: ' + TCEA);
 
     //VAN
     var VAN = this.getVAN(LoanAmount, DiscountRate);
-    console.log("VAN: " + VAN)
+    console.log('VAN: ' + VAN);
 
-/*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
+    /*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
     const npvCalculado = flujosEfectivo.reduce((npv, flujo, t) => npv + (flujo / Math.pow(1 + 0.10, t)), 0);
     console.log("NPV Calculado manualmente: ", npvCalculado);
     const npvBiblioteca = npv(0.10, flujosEfectivo);
     console.log("NPV Calculado con financial library: ", npvBiblioteca); */
 
-
     ////Pruebas
-
   }
 
   GetTEA(interestType: String, interestRate: number, capitalization: String) {
@@ -458,230 +497,324 @@ export class FinanceFormComponent {
     );
   }
 
-  getInterests(TotalInstallments: number){
+  getInterests(TotalInstallments: number) {
     var Interests = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
-      Interests += this.Installments[i]-this.Amortization[i]-this.InsuranceCreditInstallment[i];
+    for (var i = 0; i < TotalInstallments + 1; i++) {
+      Interests +=
+        this.Installments[i] -
+        this.Amortization[i] -
+        this.InsuranceCreditInstallment[i];
     }
     return Interests;
   }
 
-  getCapitalAmortization(TotalInstallments: number){
+  getCapitalAmortization(TotalInstallments: number) {
     var CapitalAmortization = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
-      CapitalAmortization -= this.Amortization[i]-this.FinalInstallmentAmortization[i];
+    for (var i = 0; i < TotalInstallments + 1; i++) {
+      CapitalAmortization -=
+        this.Amortization[i] - this.FinalInstallmentAmortization[i];
     }
     return CapitalAmortization;
   }
 
-  GetCreditInsurance(TotalInstallments: number){
+  GetCreditInsurance(TotalInstallments: number) {
     var CreditInsurance = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
+    for (var i = 0; i < TotalInstallments + 1; i++) {
       CreditInsurance -= this.InsuranceCreditInstallment[i];
     }
     return CreditInsurance;
   }
 
-  getInsuranceAllRisk(TotalInstallments: number){
+  getInsuranceAllRisk(TotalInstallments: number) {
     var InsuranceAllRisk = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
+    for (var i = 0; i < TotalInstallments + 1; i++) {
       InsuranceAllRisk -= this.RiskInsuranceTable[i];
     }
     return InsuranceAllRisk;
   }
 
-  getGPS(TotalInstallments: number){
+  getGPS(TotalInstallments: number) {
     var GPS = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
+    for (var i = 0; i < TotalInstallments + 1; i++) {
       GPS -= this.GPSTable[i];
     }
     return GPS;
   }
 
-  getShippingCosts(TotalInstallments: number){
+  getShippingCosts(TotalInstallments: number) {
     var ShippingCosts = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
+    for (var i = 0; i < TotalInstallments + 1; i++) {
       ShippingCosts -= this.ShippingCostsTable[i];
     }
     return ShippingCosts;
   }
 
-  getAdministrativeExpenses(TotalInstallments: number){
+  getAdministrativeExpenses(TotalInstallments: number) {
     var AdministrativeExpenses = 0;
-    for(var i = 0; i < TotalInstallments+1; i++){
+    for (var i = 0; i < TotalInstallments + 1; i++) {
       AdministrativeExpenses -= this.AdministrativeExpensesTable[i];
     }
     return AdministrativeExpenses;
   }
 
-  getDiscountRate(discountRate: number, paymentFrequency: number){
-    return Math.pow(1+(discountRate/100), paymentFrequency/this.number_of_days_per_year)-1;
+  getDiscountRate(discountRate: number, paymentFrequency: number) {
+    return (
+      Math.pow(
+        1 + discountRate / 100,
+        paymentFrequency / this.number_of_days_per_year
+      ) - 1
+    );
   }
 
-  getTIR(LoanAmount: number){
-    const Flow_with_LoanAmount = [LoanAmount, ...this.Flow.map(value => -value)];
+  getTIR(LoanAmount: number) {
+    const Flow_with_LoanAmount = [
+      LoanAmount,
+      ...this.Flow.map((value) => -value),
+    ];
     const TIR = irr(Flow_with_LoanAmount);
     return TIR;
   }
 
-  getTCEA(TIR: number, paymentFrequency: number){
-    return Math.pow(1+TIR, this.number_of_days_per_year/paymentFrequency)-1;
+  getTCEA(TIR: number, paymentFrequency: number) {
+    return (
+      Math.pow(1 + TIR, this.number_of_days_per_year / paymentFrequency) - 1
+    );
   }
 
   getVAN(LoanAmount: number, DiscountRate: number): number {
-    const Flow_with_LoanAmount = [...this.Flow.map(value => -value)];
-  
+    const Flow_with_LoanAmount = [...this.Flow.map((value) => -value)];
+
     // Imprimir flujos de efectivo para depuración
     for (let i = 0; i < Flow_with_LoanAmount.length; i++) {
       console.log(`Flow_with_LoanAmount[${i}]: ${Flow_with_LoanAmount[i]}`);
     }
-  
+
     console.log(`LoanAmount: ${LoanAmount}`);
     console.log(`DiscountRate: ${DiscountRate}`);
-  
+
     // Calcular el NPV utilizando la función npv de la biblioteca financiera
     const npvResult = npv(DiscountRate, Flow_with_LoanAmount);
     console.log(`npv: ${npvResult}`);
-  
+
     // Retornar el resultado, que es la suma del préstamo y el NPV
     return LoanAmount + npvResult;
   }
 
-
-  getTable(finalInstallment: number, TEP: number, lifeInsurance: number, TotalInstallments: number, PercentageOfReliefInsurance: number, BalanceToFinanceWithInstallments: number, RiskInsurance: number){
+  getTable(
+    finalInstallment: number,
+    TEP: number,
+    lifeInsurance: number,
+    TotalInstallments: number,
+    PercentageOfReliefInsurance: number,
+    BalanceToFinanceWithInstallments: number,
+    RiskInsurance: number
+  ) {
     var NumberofInstallments = TotalInstallments + 1;
 
-    for(var i = 0; i < NumberofInstallments; i++){
+    for (var i = 0; i < NumberofInstallments; i++) {
       //Saldo inicial Cuota Final
-      if(i == 0){
-        this.InitialBalanceFinalInstallment[i] = finalInstallment/Math.pow(1+TEP+(lifeInsurance/100),TotalInstallments+1);
-      }
-      else{
-        this.InitialBalanceFinalInstallment[i] = this.FinalBalanceFinalInstallment[i-1];
+      if (i == 0) {
+        this.InitialBalanceFinalInstallment[i] =
+          finalInstallment /
+          Math.pow(1 + TEP + lifeInsurance / 100, TotalInstallments + 1);
+      } else {
+        this.InitialBalanceFinalInstallment[i] =
+          this.FinalBalanceFinalInstallment[i - 1];
       }
 
       //Interes Cuota Final
-      this.FinalInstallmentInterest[i] = -this.InitialBalanceFinalInstallment[i] * TEP;
+      this.FinalInstallmentInterest[i] =
+        -this.InitialBalanceFinalInstallment[i] * TEP;
 
       //Seguro desgav. Cuota Final
-      this.CreditInsuranceFinalInstallment[i] = -this.InitialBalanceFinalInstallment[i]*(PercentageOfReliefInsurance);
+      this.CreditInsuranceFinalInstallment[i] =
+        -this.InitialBalanceFinalInstallment[i] * PercentageOfReliefInsurance;
 
       //Amort. Cuota Final
-      if(i == NumberofInstallments-1){
-        this.FinalInstallmentAmortization[i] = -parseFloat((-this.InitialBalanceFinalInstallment[i]+this.FinalInstallmentInterest[i]+this.CreditInsuranceFinalInstallment[i]).toFixed(7))
-      }
-      else{
+      if (i == NumberofInstallments - 1) {
+        this.FinalInstallmentAmortization[i] = -parseFloat(
+          (
+            -this.InitialBalanceFinalInstallment[i] +
+            this.FinalInstallmentInterest[i] +
+            this.CreditInsuranceFinalInstallment[i]
+          ).toFixed(7)
+        );
+      } else {
         this.FinalInstallmentAmortization[i] = 0;
       }
 
       //Saldo Final Cuota Final
-      this.FinalBalanceFinalInstallment[i] = parseFloat((this.InitialBalanceFinalInstallment[i]-this.FinalInstallmentInterest[i]-this.CreditInsuranceFinalInstallment[i]-this.FinalInstallmentAmortization[i]).toFixed(7));
-    
+      this.FinalBalanceFinalInstallment[i] = parseFloat(
+        (
+          this.InitialBalanceFinalInstallment[i] -
+          this.FinalInstallmentInterest[i] -
+          this.CreditInsuranceFinalInstallment[i] -
+          this.FinalInstallmentAmortization[i]
+        ).toFixed(7)
+      );
+
       //Saldo Inicial Cuota
-      if(i == 0){
-        this.InitialBalanceInstallment[i] = BalanceToFinanceWithInstallments
-      }
-      else{
-        if(i<TotalInstallments){ // <=?
-          this.InitialBalanceInstallment[i] = this.FinalBalanceInstallment[i-1];
-        }
-        else{
+      if (i == 0) {
+        this.InitialBalanceInstallment[i] = BalanceToFinanceWithInstallments;
+      } else {
+        if (i < TotalInstallments) {
+          // <=?
+          this.InitialBalanceInstallment[i] =
+            this.FinalBalanceInstallment[i - 1];
+        } else {
           this.InitialBalanceInstallment[i] = 0;
         }
       }
 
       //Interes
-      this.Interest[i] = -this.InitialBalanceInstallment[i]*TEP;
-    
+      this.Interest[i] = -this.InitialBalanceInstallment[i] * TEP;
+
       //Cuota (inc Seg Des)
-      if(i<=NumberofInstallments-1){
-        if(this.List_of_Grace_Periods[i]=="T"){ // En caso que sea un Plazo de Gracia Total
+      if (i <= NumberofInstallments - 1) {
+        if (this.List_of_Grace_Periods[i] == 'T') {
+          // En caso que sea un Plazo de Gracia Total
           this.Installments[i] = 0;
-        }
-        else if(this.List_of_Grace_Periods[i]=="P"){
+        } else if (this.List_of_Grace_Periods[i] == 'P') {
           this.Installments[i] = this.Interest[i];
+        } else {
+          this.Installments[i] = this.CalcularPago(
+            TEP,
+            PercentageOfReliefInsurance,
+            TotalInstallments,
+            i + 1,
+            this.InitialBalanceInstallment[i]
+          );
         }
-        else{
-          this.Installments[i] = this.CalcularPago(TEP, PercentageOfReliefInsurance, TotalInstallments, i+1, this.InitialBalanceInstallment[i]);
-        }
-      }
-      else{
+      } else {
         this.Installments[i] = 0;
       }
-    
+
       //Seguro desg. Cuota
-      this.InsuranceCreditInstallment[i] = -this.InitialBalanceInstallment[i]*PercentageOfReliefInsurance;
+      this.InsuranceCreditInstallment[i] =
+        -this.InitialBalanceInstallment[i] * PercentageOfReliefInsurance;
 
       //Amort.
-      if(i<=NumberofInstallments-1){
-        if(this.List_of_Grace_Periods[i]=="T" || this.List_of_Grace_Periods[i]=="P"){ // En caso que sea un Plazo de Gracia Total o Parcial
+      if (i <= NumberofInstallments - 1) {
+        if (
+          this.List_of_Grace_Periods[i] == 'T' ||
+          this.List_of_Grace_Periods[i] == 'P'
+        ) {
+          // En caso que sea un Plazo de Gracia Total o Parcial
           this.Amortization[i] = 0;
+        } else {
+          this.Amortization[i] =
+            this.Installments[i] -
+            this.Interest[i] -
+            this.InsuranceCreditInstallment[i];
         }
-        else{
-          this.Amortization[i] = this.Installments[i] - this.Interest[i] - this.InsuranceCreditInstallment[i];
-        }
-      }
-      else{
+      } else {
         this.Amortization[i] = 0;
       }
-    
+
       //Seguro riesgo
-      if(i<=NumberofInstallments+1){ // +1?? Según el excel es +1
+      if (i <= NumberofInstallments + 1) {
+        // +1?? Según el excel es +1
         this.RiskInsuranceTable[i] = RiskInsurance;
       }
 
       //GPS
-      if(i<=NumberofInstallments+1){ // +1?? Según el excel es +1
+      if (i <= NumberofInstallments + 1) {
+        // +1?? Según el excel es +1
         this.GPSTable[i] = this.smartPaymentAux.gps!;
       }
 
       //Portes
-      if(i<=NumberofInstallments+1){ // +1?? Según el excel es +1
+      if (i <= NumberofInstallments + 1) {
+        // +1?? Según el excel es +1
         this.ShippingCostsTable[i] = this.smartPaymentAux.shippingCosts!;
       }
 
       //Gastos Adm.
-      if(i<=NumberofInstallments+1){ // +1?? Según el excel es +1
-        this.AdministrativeExpensesTable[i] = this.smartPaymentAux.administrativeExpenses!;
+      if (i <= NumberofInstallments + 1) {
+        // +1?? Según el excel es +1
+        this.AdministrativeExpensesTable[i] =
+          this.smartPaymentAux.administrativeExpenses!;
       }
 
       //Saldo Final para Cuota
-      if(this.List_of_Grace_Periods[i]=="T"){ // Si es un Plazo de Gracia Total
-        this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] - this.Interest[i];
-      }
-      else{
-        this.FinalBalanceInstallment[i] = this.InitialBalanceInstallment[i] + this.Amortization[i];
+      if (this.List_of_Grace_Periods[i] == 'T') {
+        // Si es un Plazo de Gracia Total
+        this.FinalBalanceInstallment[i] =
+          this.InitialBalanceInstallment[i] - this.Interest[i];
+      } else {
+        this.FinalBalanceInstallment[i] =
+          this.InitialBalanceInstallment[i] + this.Amortization[i];
       }
 
       //Flujo
-      if(this.List_of_Grace_Periods[i]=="T"||this.List_of_Grace_Periods[i]=="P" ){ // Si es un Plazo de Gracia Total o Parcial
-        if(i==NumberofInstallments-1){
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]-this.InsuranceCreditInstallment[i]+this.FinalInstallmentAmortization[i];
+      if (
+        this.List_of_Grace_Periods[i] == 'T' ||
+        this.List_of_Grace_Periods[i] == 'P'
+      ) {
+        // Si es un Plazo de Gracia Total o Parcial
+        if (i == NumberofInstallments - 1) {
+          this.Flow[i] =
+            -this.Installments[i] +
+            this.RiskInsuranceTable[i] +
+            this.GPSTable[i] +
+            this.ShippingCostsTable[i] +
+            this.AdministrativeExpensesTable[i] -
+            this.InsuranceCreditInstallment[i] +
+            this.FinalInstallmentAmortization[i];
+        } else {
+          this.Flow[i] =
+            -this.Installments[i] +
+            this.RiskInsuranceTable[i] +
+            this.GPSTable[i] +
+            this.ShippingCostsTable[i] +
+            this.AdministrativeExpensesTable[i] -
+            this.InsuranceCreditInstallment[i];
         }
-        else{
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]-this.InsuranceCreditInstallment[i];
-        }
-      }
-      else{
-        if(i==NumberofInstallments-1){
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]+this.FinalInstallmentAmortization[i];
-        }
-        else{
-          this.Flow[i] = -this.Installments[i] + this.RiskInsuranceTable[i] + this.GPSTable[i] + this.ShippingCostsTable[i] + this.AdministrativeExpensesTable[i]
+      } else {
+        if (i == NumberofInstallments - 1) {
+          this.Flow[i] =
+            -this.Installments[i] +
+            this.RiskInsuranceTable[i] +
+            this.GPSTable[i] +
+            this.ShippingCostsTable[i] +
+            this.AdministrativeExpensesTable[i] +
+            this.FinalInstallmentAmortization[i];
+        } else {
+          this.Flow[i] =
+            -this.Installments[i] +
+            this.RiskInsuranceTable[i] +
+            this.GPSTable[i] +
+            this.ShippingCostsTable[i] +
+            this.AdministrativeExpensesTable[i];
         }
       }
     }
   }
 
-
-
-  CalcularPago(TEP: number, PercentageOfReliefInsurance: number, NumberofInstallments: number, NumberofCurrentInstallment: number, InitialBalanceInstallment: number){
+  CalcularPago(
+    TEP: number,
+    PercentageOfReliefInsurance: number,
+    NumberofInstallments: number,
+    NumberofCurrentInstallment: number,
+    InitialBalanceInstallment: number
+  ) {
     // No se porque el "-", en el excel no lo encuentro
-    var divider = 1 - Math.pow(1+(TEP+PercentageOfReliefInsurance),-(NumberofInstallments-NumberofCurrentInstallment+1));
-    if (divider == 0){
+    var divider =
+      1 -
+      Math.pow(
+        1 + (TEP + PercentageOfReliefInsurance),
+        -(NumberofInstallments - NumberofCurrentInstallment + 1)
+      );
+    if (divider == 0) {
       return 0;
     }
-    return -(InitialBalanceInstallment*(TEP+PercentageOfReliefInsurance))/(1-Math.pow(1+(TEP+PercentageOfReliefInsurance),-(NumberofInstallments-NumberofCurrentInstallment+1)));
+    return (
+      -(InitialBalanceInstallment * (TEP + PercentageOfReliefInsurance)) /
+      (1 -
+        Math.pow(
+          1 + (TEP + PercentageOfReliefInsurance),
+          -(NumberofInstallments - NumberofCurrentInstallment + 1)
+        ))
+    );
   }
-
 }
