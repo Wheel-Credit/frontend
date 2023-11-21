@@ -30,7 +30,7 @@
     </div>
 
     <div class="form-group">
-      <label for="initialInstallment">Cuota Inicial</label>
+      <label for="initialInstallment">% Cuota Inicial</label>
       <input
         type="number"
         class="form-control"
@@ -43,7 +43,7 @@
     </div>
 
     <div class="form-group">
-      <label for="finalInstallment">Cuota Final</label>
+      <label for="finalInstallment">% Cuota Final</label>
       <input
         type="number"
         class="form-control"
@@ -56,7 +56,7 @@
     </div>
 
     <div class="form-group">
-      <label for="interestRate">Tasa de Interés</label>
+      <label for="interestRate">% Tasa de Interés</label>
       <input
         type="number"
         class="form-control"
@@ -136,8 +136,8 @@
           class="form-control"
           formControlName="notaryCostsType"
         >
-          <option>Efectivo</option>
-          <option>Prestamo</option>
+          <option>Cash</option>
+          <option>Loan</option>
         </select>
       </div>
     </div>
@@ -162,8 +162,8 @@
           class="form-control"
           formControlName="registrationCostsType"
         >
-          <option>Efectivo</option>
-          <option>Prestamo</option>
+          <option>Cash</option>
+          <option>Loan</option>
         </select>
       </div>
     </div>
@@ -188,8 +188,8 @@
           class="form-control"
           formControlName="appraisalType"
         >
-          <option>Efectivo</option>
-          <option>Prestamo</option>
+          <option>Cash</option>
+          <option>Loan</option>
         </select>
       </div>
     </div>
@@ -214,8 +214,8 @@
           class="form-control"
           formControlName="studyCommissionType"
         >
-          <option>Efectivo</option>
-          <option>Prestamo</option>
+          <option>Cash</option>
+          <option>Loan</option>
         </select>
       </div>
     </div>
@@ -240,8 +240,8 @@
           class="form-control"
           formControlName="activationCommissionType"
         >
-          <option>Efectivo</option>
-          <option>Prestamo</option>
+          <option>Cash</option>
+          <option>Loan</option>
         </select>
       </div>
     </div>
@@ -343,5 +343,13 @@
     (click)="onSubmit()"
   >
     Create Table
+  </button>
+  <button
+    type="button"
+    class="btn btn-default ml-10px .green_button"
+    [class.green_button]="true"
+    (click)="inputRandomData()"
+  >
+    Random Data
   </button>
 </form>
