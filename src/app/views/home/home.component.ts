@@ -14,7 +14,6 @@ export class HomeComponent {
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.userService.getAuth().subscribe(
       (response) => {
         this.loading = false;
