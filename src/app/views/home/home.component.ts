@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  loading: boolean = true;
   valideUser: boolean = true;
 
   constructor(private userService: UserService, private router: Router) {}
@@ -16,6 +17,7 @@ export class HomeComponent {
     console.log('ngOnInit');
     this.userService.getAuth().subscribe(
       (response) => {
+        this.loading = false;
         if (response) {
           this.valideUser = true;
         } else {
@@ -23,6 +25,7 @@ export class HomeComponent {
         }
       },
       (error) => {
+        this.loading = false;
         this.valideUser = false;
       }
     );
