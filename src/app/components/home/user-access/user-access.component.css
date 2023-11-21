@@ -99,6 +99,10 @@ button {
   background: -webkit-linear-gradient(right, #ec6e6e, #c42525);
 }
 
+.rmv-margin {
+  margin-top: 15px !important;
+}
+
 .forgot-pass {
   margin-top: 15px;
   text-align: center;

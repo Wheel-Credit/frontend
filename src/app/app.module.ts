@@ -19,6 +19,8 @@ import { FinanceFormComponent } from './components/form/finance-form/finance-for
 import { HeaderUnsignedComponent } from './components/shared/header-unsigned/header-unsigned.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableComponent } from './components/form/table/table.component';
+import { ListComponent } from './components/history/list/list.component';
+import { DocumentationComponent } from './components/home/documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { TableComponent } from './components/form/table/table.component';
     FinanceFormComponent,
     HeaderUnsignedComponent,
     TableComponent,
+    ListComponent,
+    DocumentationComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule, NgbModule],
   providers: [],

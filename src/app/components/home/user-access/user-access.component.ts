@@ -15,6 +15,7 @@ import {
   transition,
 } from '@angular/animations';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-access',
@@ -50,7 +51,8 @@ export class UserAccessComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.user = {} as UserModule;
 
@@ -84,7 +86,15 @@ export class UserAccessComponent {
     this.authService.signup(this.user).subscribe((response: any) => {
       localStorage.setItem('token', response.access_token);
       localStorage.setItem('id', response.user_id);
-      this.router.navigate(['/home']);
+      this.snackBar.open('You have signed up successfully', '', {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 2000);
     });
   }
 
@@ -98,7 +108,15 @@ export class UserAccessComponent {
       (response: any) => {
         localStorage.setItem('token', response.access_token);
         localStorage.setItem('id', response.user_id);
-        this.router.navigate(['/home']);
+        this.snackBar.open('You have logged in successfully', '', {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 2000);
       },
       (error: any) => {
         this.incorrectLogin = true;

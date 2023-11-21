@@ -1,5 +1,8 @@
 export class SmartPayment {
   constructor(
+    public name: string = '',
+    public description: string = '',
+    public image: string = '',
     public sellingPriceAsset: number | null = null,
     public paymentPlanType: number | null = null,
     public initialInstallment: number | null = null,

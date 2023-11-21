@@ -84,32 +84,42 @@ export class FinanceFormComponent {
   }
 
   inputRandomData() {
+    var type = this.getRandomNumber(0, 1);
     this.smartPaymentForm.patchValue({
-      sellingPriceAsset: 16000,
-      paymentPlanType: 36,
-      initialInstallment: 20,
-      finalInstallment: 40,
-      interestRate: 15,
-      interestType: 'TNA',
-      capitalization: 'Diaria',
+      sellingPriceAsset: this.getRandomNumber(10000, 100000),
+      paymentPlanType: 24 + type * 12,
+      initialInstallment: this.getRandomNumber(10, 30),
+      finalInstallment: 50 - type * 10,
+      interestRate: this.getRandomNumber(5, 20),
+      interestType: this.getRandomNumber(0, 1) ? 'TNA' : 'TEA',
+      capitalization: this.getRandomNumber(0, 1) ? 'Diaria' : 'Mensual',
       paymentFrequency: 30,
-      notaryCosts: 100,
-      notaryCostsType: 'Loan',
-      registrationCosts: 75,
-      registrationCostsType: 'Loan',
-      appraisal: 0,
-      appraisalType: 'Cash',
-      studyCommission: 0,
-      studyCommissionType: 'Cash',
-      activationCommission: 0,
-      activationCommissionType: 'Cash',
-      gps: 20,
-      shippingCosts: 3.5,
-      administrativeExpenses: 3.5,
-      lifeInsurance: 0.049,
-      riskInsurance: 0.3,
-      discountRate: 50,
+      notaryCosts: this.getRandomNumber(50, 200),
+      notaryCostsType: this.getRandomNumber(0, 1) ? 'Loan' : 'Cash',
+      registrationCosts: this.getRandomNumber(50, 150),
+      registrationCostsType: this.getRandomNumber(0, 1) ? 'Loan' : 'Cash',
+      appraisal: this.getRandomNumber(0, 500),
+      appraisalType: this.getRandomNumber(0, 1) ? 'Loan' : 'Cash',
+      studyCommission: this.getRandomNumber(0, 200),
+      studyCommissionType: this.getRandomNumber(0, 1) ? 'Loan' : 'Cash',
+      activationCommission: this.getRandomNumber(0, 200),
+      activationCommissionType: this.getRandomNumber(0, 1) ? 'Loan' : 'Cash',
+      gps: this.getRandomNumber(0, 100),
+      shippingCosts: this.getRandomNumber(0, 10),
+      administrativeExpenses: this.getRandomNumber(0, 10),
+      lifeInsurance: this.getRandomFloat(0.001, 0.3),
+      riskInsurance: this.getRandomFloat(0.001, 0.3),
+      discountRate: this.getRandomNumber(0, 100),
     });
     this.updateFormReadiness();
+  }
+
+  getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  getRandomFloat(min: number, max: number): number {
+    var temp = Math.random() * (max - min) + min;
+    return parseFloat(temp.toFixed(3));
   }
 }
