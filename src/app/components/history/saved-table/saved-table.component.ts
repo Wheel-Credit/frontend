@@ -8,11 +8,11 @@ import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  selector: 'app-saved-table',
+  templateUrl: './saved-table.component.html',
+  styleUrls: ['./saved-table.component.css'],
 })
-export class TableComponent {
+export class SavedTableComponent {
   @ViewChild(MatTable) table: MatTable<FinanceTable> | undefined;
   smartPaymentForm: FormGroup;
   smartPaymentAux = new SmartPayment();
@@ -31,7 +31,7 @@ export class TableComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TableComponent>,
+    private dialogRef: MatDialogRef<SavedTableComponent>,
     private paymentService: PaymentService,
     private fb: FormBuilder
   ) {

@@ -79,6 +79,12 @@ p {
   flex: 1;
 }
 
+.card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .footer {
   display: flex;
   justify-content: center;

@@ -1,191 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SmartPayment } from 'src/app/model/smartPayment.model';
-import { UserService } from 'src/app/services/auth/user.service';
-import { TableComponent } from '../../form/table/table.component';
-
-const ELEMENT_DATA: SmartPayment[] = [
-  {
-    name: 'Carro 1',
-    description: 'Descripcion del carro 1',
-    image:
-      'https://cdn.pixabay.com/photo/2021/09/20/23/03/car-6642036_1280.jpg',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-  {
-    name: 'Carro 2',
-    description: 'Descripcion del carro 2',
-    image:
-      'https://static.vecteezy.com/system/resources/thumbnails/008/585/294/small/3d-rendering-sport-blue-car-on-white-bakcground-jpg-free-photo.jpg',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-  {
-    name: 'Carro 3',
-    description: 'Descripcion del carro 3',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTo5cQ05xdweolKj5Flz-QHOso7Dwux5IIxA&usqp=CAU.png',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-  {
-    name: 'Carro 4',
-    description: 'Descripcion del carro 4',
-    image:
-      'https://cdn.pixabay.com/photo/2021/09/20/23/03/car-6642036_1280.jpg',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-  {
-    name: 'Carro 5',
-    description: 'Descripcion del carro 5',
-    image:
-      'https://static.vecteezy.com/system/resources/thumbnails/008/585/294/small/3d-rendering-sport-blue-car-on-white-bakcground-jpg-free-photo.jpg',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-  {
-    name: 'Carro 6',
-    description: 'Descripcion del carro 6',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTo5cQ05xdweolKj5Flz-QHOso7Dwux5IIxA&usqp=CAU.png',
-    paymentPlanType: 24,
-    sellingPriceAsset: 10000,
-    initialInstallment: 2000,
-    finalInstallment: 500,
-    interestRate: 5,
-    interestType: 'fixed',
-    capitalization: 'monthly',
-    paymentFrequency: 0,
-    notaryCosts: 100,
-    notaryCostsType: 'fixed',
-    registrationCosts: 100,
-    registrationCostsType: 'fixed',
-    appraisal: 100,
-    appraisalType: 'fixed',
-    studyCommission: 100,
-    studyCommissionType: 'fixed',
-    activationCommission: 100,
-    activationCommissionType: 'fixed',
-    gps: 100,
-    shippingCosts: 100,
-    administrativeExpenses: 100,
-    lifeInsurance: 100,
-    riskInsurance: 100,
-    discountRate: 100,
-  },
-];
+import { PaymentService } from 'src/app/services/payment/payment.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { cloneDeep } from 'lodash';
+import { SavedTableComponent } from '../saved-table/saved-table.component';
 
 @Component({
   selector: 'app-list',
@@ -195,24 +14,82 @@ const ELEMENT_DATA: SmartPayment[] = [
 export class ListComponent {
   dataSource: SmartPayment[] = [];
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(
+    private paymentService: PaymentService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    // this.dataSource = this.userService.getSmartPayments().subscribe((response: any) => {
-    //   // consulta exitosa
-    // });
-    this.dataSource = ELEMENT_DATA;
+    var id = localStorage.getItem('id');
+    this.paymentService
+      .getPaymentByClientId(parseInt(id ?? ''))
+      .subscribe((response: any) => {
+        this.dataSource = response;
+      });
   }
 
   openSmartPaymentTable(smartPayment: SmartPayment) {
-    const dialogRef: MatDialogRef<TableComponent> = this.dialog.open(
-      TableComponent,
+    const tempSmartPayment = cloneDeep(smartPayment);
+    const dialogRef: MatDialogRef<SavedTableComponent> = this.dialog.open(
+      SavedTableComponent,
       {
         data: { formValues: smartPayment },
+        hasBackdrop: false,
+        disableClose: false,
       }
     );
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+    dialogRef
+      .afterClosed()
+      .subscribe((updatedSmartPayment: SmartPayment | undefined) => {
+        if (updatedSmartPayment) {
+          const isDataChanged = this.isDataChanged(
+            tempSmartPayment,
+            updatedSmartPayment
+          );
+
+          if (isDataChanged) {
+            const config = new MatSnackBarConfig();
+            config.duration = 5000;
+            config.panelClass = ['snackbar-container'];
+
+            const snackBarRef = this.snackBar.open(
+              'Your table was updated, do you want to save your changes?',
+              'Update',
+              config
+            );
+
+            snackBarRef.onAction().subscribe(() => {
+              this.paymentService
+                .putPayment(updatedSmartPayment.id!, updatedSmartPayment)
+                .subscribe((response: any) => {
+                  console.log(response);
+                  this.snackBar.open('Your changes were saved', 'Close', {
+                    duration: 2000,
+                  });
+                });
+            });
+
+            snackBarRef.afterDismissed().subscribe((info) => {
+              if (!info.dismissedByAction) {
+                this.snackBar.open('Your changes were not saved', 'Close', {
+                  duration: 2000,
+                });
+              }
+            });
+          }
+        }
+      });
+  }
+
+  isDataChanged(
+    smartPayment: SmartPayment,
+    updatedSmartPayment: SmartPayment
+  ): boolean {
+    return (
+      smartPayment.name !== updatedSmartPayment.name ||
+      smartPayment.description !== updatedSmartPayment.description ||
+      smartPayment.image !== updatedSmartPayment.image
+    );
   }
 }

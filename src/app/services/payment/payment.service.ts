@@ -24,15 +24,21 @@ export class PaymentService {
     return { headers };
   }
 
+  getPaymentByClientId(id: number) {
+    return this.http
+      .get(`${this.baseUrl}/${id}/list`, this.getHttpOptions())
+      .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
+  }
+
   postPayment(id: number, payment: any) {
     return this.http
       .post(`${this.baseUrl}/${id}/create`, payment, this.getHttpOptions())
       .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
   }
 
-  getPaymentByClientId(id: number) {
+  putPayment(id: number, payment: any) {
     return this.http
-      .get(`${this.baseUrl}/${id}/list`, this.getHttpOptions())
+      .put(`${this.baseUrl}/${id}/update`, payment, this.getHttpOptions())
       .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
   }
 }
