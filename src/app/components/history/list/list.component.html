@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="container hr">
-    <div class="card" *ngFor="let item of dataSource">
+    <div class="card" *ngFor="let item of dataSource; index as i">
       <div class="card-body">
         <div class="header">
           <h1 class="card-title">
@@ -31,7 +31,7 @@
         <div class="footer">
           <button
             class="btn btn-default ml-10px"
-            (click)="openSmartPaymentTable(item)"
+            (click)="openSmartPaymentTable(item, i)"
           >
             View Payment Plan
           </button>
