@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableComponent } from './components/form/table/table.component';
 import { ListComponent } from './components/history/list/list.component';
 import { DocumentationComponent } from './components/home/documentation/documentation.component';
+import { SavedTableComponent } from './components/history/saved-table/saved-table.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DocumentationComponent } from './components/home/documentation/document
     TableComponent,
     ListComponent,
     DocumentationComponent,
+    SavedTableComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule, NgbModule],
   providers: [],

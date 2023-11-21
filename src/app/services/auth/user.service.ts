@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ErrorHandlerService } from './error-handler.service';
+import { ErrorHandlerService } from '../error/error-handler.service';
 import { catchError, Observable, retry } from 'rxjs';
 
 @Injectable({

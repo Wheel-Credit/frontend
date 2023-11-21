@@ -6,18 +6,16 @@ import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  selector: 'app-saved-table',
+  templateUrl: './saved-table.component.html',
+  styleUrls: ['./saved-table.component.css'],
 })
-export class TableComponent {
+export class SavedTableComponent {
   @ViewChild(MatTable) table: MatTable<FinanceTable> | undefined;
   smartPaymentForm: FormGroup;
   smartPaymentAux = new SmartPayment();
-  tableSaved = false;
 
   displayedColumns: string[] = [
     'index',
@@ -33,10 +31,9 @@ export class TableComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TableComponent>,
+    private dialogRef: MatDialogRef<SavedTableComponent>,
     private paymentService: PaymentService,
-    private fb: FormBuilder,
-    private router: Router
+    private fb: FormBuilder
   ) {
     this.smartPaymentAux = data.formValues;
     this.smartPaymentForm = this.fb.group({
@@ -112,50 +109,6 @@ export class TableComponent {
     this.smartPaymentAux.description =
       this.smartPaymentForm.get('description')?.value;
     this.smartPaymentAux.image = this.smartPaymentForm.get('image')?.value;
-  }
-
-  saveTable() {
-    var id = localStorage.getItem('id');
-
-    if (this.smartPaymentAux.name == null || this.smartPaymentAux.name == '') {
-      this.smartPaymentAux.name = 'Smart Payment';
-    }
-    if (
-      this.smartPaymentAux.description == null ||
-      this.smartPaymentAux.description == ''
-    ) {
-      this.smartPaymentAux.description =
-        'A smart payment plan for your financial needs to get a car.';
-    }
-    if (
-      this.smartPaymentAux.image == null ||
-      this.smartPaymentAux.image == ''
-    ) {
-      this.smartPaymentAux.image =
-        'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
-    }
-
-    this.smartPaymentForm.get('name')?.setValue(this.smartPaymentAux.name);
-    this.smartPaymentForm
-      .get('description')
-      ?.setValue(this.smartPaymentAux.description);
-    this.smartPaymentForm.get('image')?.setValue(this.smartPaymentAux.image);
-
-    this.paymentService
-      .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
-      .subscribe(
-        (response) => {
-          this.tableSaved = true;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-
-  routeToHistory() {
-    this.dialogRef.close();
-    this.router.navigate(['/history']);
   }
 
   closeTable() {
