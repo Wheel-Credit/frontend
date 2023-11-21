@@ -190,37 +190,29 @@ export class TableComponent {
       this.smartPaymentAux.interestRate!,
       this.smartPaymentAux.capitalization
     );
-    console.log('TEA: ' + TEA);
 
     //TEP (la que se utiliza para las cuotas)
     var TEP = this.getTEP(TEA, this.smartPaymentAux.paymentFrequency!);
-    console.log('TEP: ' + TEP);
 
     //Numero de por Año Cuotas
     var Number_of_Installments_per_year = this.GetNumInstallments(
       this.smartPaymentAux.paymentFrequency!
     );
-    console.log(
-      'Number of Installments per year: ' + Number_of_Installments_per_year
-    );
 
     //Numero Total de Cuotas
     var TotalInstallments = this.smartPaymentAux.paymentPlanType;
-    console.log('TotalInstallments: ' + TotalInstallments);
 
     //Cuota Inicial
     var InitialInstallment = this.GetInitialInstallment(
       this.smartPaymentAux.sellingPriceAsset!,
       this.smartPaymentAux.initialInstallment!
     );
-    console.log('InitialInstallment: ' + InitialInstallment);
 
     //Cuota Final
     var FinalInstallment = this.getFinalInstallment(
       this.smartPaymentAux.sellingPriceAsset!,
       this.smartPaymentAux.finalInstallment!
     );
-    console.log('FinalInstallment: ' + FinalInstallment);
 
     //Monto del Prestamo
     var LoanAmount = this.getLoanAmount(
@@ -237,7 +229,6 @@ export class TableComponent {
       this.smartPaymentAux.activationCommission!,
       this.smartPaymentAux.activationCommissionType
     );
-    console.log('LoanAmount: ' + LoanAmount);
 
     //Saldo a financiar con cuotas
     var BalanceToFinanceWithInstallments =
@@ -248,23 +239,18 @@ export class TableComponent {
         this.smartPaymentAux.lifeInsurance!,
         TotalInstallments!
       );
-    console.log(
-      'BalanceToFinanceWithInstallments: ' + BalanceToFinanceWithInstallments
-    );
 
     //% de Seguro desgrav. per.
     var PercentageOfReliefInsurance =
       ((this.smartPaymentAux.lifeInsurance! / 100) *
         this.smartPaymentAux.paymentFrequency!) /
       30;
-    console.log('PercentageOfReliefInsurance: ' + PercentageOfReliefInsurance);
 
     //Seguro riesgo
     var RiskInsurance =
       ((this.smartPaymentAux.riskInsurance! / 100) *
         this.smartPaymentAux.sellingPriceAsset!) /
       Number_of_Installments_per_year;
-    console.log('RiskInsurance: ' + RiskInsurance);
 
     //Tabla
     this.getTable(
@@ -279,97 +265,44 @@ export class TableComponent {
 
     //Probar valores de la tabla
     var NumberofMonth = 36; //Recordar que en codigo empieza desde 0
-    console.log('-----------------');
-    console.log('-----------------');
-    console.log('Pruebas de la tabla');
-    console.log(
-      'Saldo Inicial Cuota Final: ' +
-        this.InitialBalanceFinalInstallment[NumberofMonth]
-    );
-    console.log(
-      'Interes Cuota Final: ' + this.FinalInstallmentInterest[NumberofMonth]
-    );
-    console.log(
-      'Amort. Cuota Final: ' + this.FinalInstallmentAmortization[NumberofMonth]
-    );
-    console.log(
-      'Seguro desgav. Cuota Final: ' +
-        this.CreditInsuranceFinalInstallment[NumberofMonth]
-    );
-    console.log(
-      'Saldo Final Cuota Final: ' +
-        this.FinalBalanceFinalInstallment[NumberofMonth]
-    );
-    console.log(
-      'Saldo Inicial Cuota: ' + this.InitialBalanceInstallment[NumberofMonth]
-    );
-    console.log('Interes: ' + this.Interest[NumberofMonth]);
-    console.log('Cuota (inc Seg Des): ' + this.Installments[NumberofMonth]);
-    console.log('Amort.: ' + this.Amortization[NumberofMonth]);
-    console.log(
-      'Seguro desg. Cuota: ' + this.InsuranceCreditInstallment[NumberofMonth]
-    );
-    console.log('Seguro riesgo: ' + this.RiskInsuranceTable[NumberofMonth]);
-    console.log('GPS: ' + this.GPSTable[NumberofMonth]);
-    console.log('Portes: ' + this.ShippingCostsTable[NumberofMonth]);
-    console.log(
-      'Gastos Adm.: ' + this.AdministrativeExpensesTable[NumberofMonth]
-    );
-    console.log(
-      'Saldo Final para Cuota: ' + this.FinalBalanceInstallment[NumberofMonth]
-    );
-    console.log('Flujo: ' + this.Flow[NumberofMonth]);
-    console.log('-----------------');
-    console.log('-----------------');
 
     //Intereses
     var Interests = this.getInterests(TotalInstallments!);
-    console.log('Interests: ' + Interests);
 
     //Amortización del capital
     var CapitalAmortization = this.getCapitalAmortization(TotalInstallments!);
-    console.log('CapitalAmortization: ' + CapitalAmortization);
 
     //Seguro Desgravamen
     var CreditInsurance = this.GetCreditInsurance(TotalInstallments!);
-    console.log('CreditInsurance: ' + CreditInsurance);
 
     //Seguro contra todo Riesgo
     var InsuranceAllRisk = this.getInsuranceAllRisk(TotalInstallments!);
-    console.log('InsuranceAllRisk: ' + InsuranceAllRisk);
 
     //GPS
     var GPS = this.getGPS(TotalInstallments!);
-    console.log('GPS: ' + GPS);
 
     //Portes
     var ShippingCosts = this.getShippingCosts(TotalInstallments!);
-    console.log('ShippingCosts: ' + ShippingCosts);
 
     //Gastos Administrativos
     var AdministrativeExpenses = this.getAdministrativeExpenses(
       TotalInstallments!
     );
-    console.log('AdministrativeExpenses: ' + AdministrativeExpenses);
 
     //Tasa de Descuento
     var DiscountRate = this.getDiscountRate(
       this.smartPaymentAux.discountRate!,
       this.smartPaymentAux.paymentFrequency!
     );
-    console.log('DiscountRate: ' + DiscountRate);
 
     //TIR
     var TIR = this.getTIR(LoanAmount);
-    console.log('TIR: ' + TIR);
 
     //TCEA
     var TCEA = this.getTCEA(TIR, this.smartPaymentAux.paymentFrequency!);
-    console.log('TCEA: ' + TCEA);
 
     //VAN
     var VAN = this.getVAN(LoanAmount, DiscountRate);
-    console.log('VAN: ' + VAN);
 
     /*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
     const npvCalculado = flujosEfectivo.reduce((npv, flujo, t) => npv + (flujo / Math.pow(1 + 0.10, t)), 0);
@@ -566,12 +499,8 @@ export class TableComponent {
     //   console.log(`Flow_with_LoanAmount[${i}]: ${Flow_with_LoanAmount[i]}`);
     // }
 
-    console.log(`LoanAmount: ${LoanAmount}`);
-    console.log(`DiscountRate: ${DiscountRate}`);
-
     // Calcular el NPV utilizando la función npv de la biblioteca financiera
     const npvResult = npv(DiscountRate, Flow_with_LoanAmount);
-    console.log(`npv: ${npvResult}`);
 
     // Retornar el resultado, que es la suma del préstamo y el NPV
     return LoanAmount + npvResult;
@@ -775,7 +704,6 @@ export class TableComponent {
     NumberofCurrentInstallment: number,
     InitialBalanceInstallment: number
   ) {
-    // No se porque el "-", en el excel no lo encuentro
     var divider =
       1 -
       Math.pow(
