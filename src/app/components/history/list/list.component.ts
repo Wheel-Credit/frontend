@@ -29,7 +29,7 @@ export class ListComponent {
       });
   }
 
-  openSmartPaymentTable(smartPayment: SmartPayment) {
+  openSmartPaymentTable(smartPayment: SmartPayment, index: number) {
     const tempSmartPayment = cloneDeep(smartPayment);
     const dialogRef: MatDialogRef<SavedTableComponent> = this.dialog.open(
       SavedTableComponent,
@@ -75,6 +75,7 @@ export class ListComponent {
                 this.snackBar.open('Your changes were not saved', 'Close', {
                   duration: 2000,
                 });
+                this.dataSource[index] = tempSmartPayment;
               }
             });
           }
