@@ -14,11 +14,11 @@ header {
 
 img {
   border-radius: 50%;
-  width: 40px;
+  width: 80px;
   padding: 20px;
 }
 
-a {
+div.right > a {
   text-decoration: none;
   color: #fff;
   font-size: 20px;
@@ -27,7 +27,7 @@ a {
   border-radius: 20px;
 }
 
-a:hover {
+div.right > a:hover {
   background-color: #fff;
   color: #d64747;
 }
