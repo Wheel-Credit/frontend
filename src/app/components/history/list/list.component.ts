@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SmartPayment } from 'src/app/model/smartPayment.model';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/auth/user.service';
 import { TableComponent } from '../../form/table/table.component';
 
 const ELEMENT_DATA: SmartPayment[] = [

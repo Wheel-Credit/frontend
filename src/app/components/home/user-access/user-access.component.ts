@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserModule } from 'src/app/model/user.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import {
   FormBuilder,
   FormGroup,

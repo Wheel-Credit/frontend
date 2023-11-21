@@ -2,9 +2,9 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { irr, npv } from 'financial';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SmartPayment } from 'src/app/model/smartPayment.model';
-import { paymentTable } from 'src/app/model/archive/table.model';
 import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
+import { PaymentService } from 'src/app/services/payment/payment.service';
 
 @Component({
   selector: 'app-table',
@@ -52,8 +52,13 @@ export class TableComponent {
   ];
   dataSource: FinanceTable[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private paymentService: PaymentService
+  ) {
     this.smartPaymentAux = data.formValues;
+    // console log smartPaymentAux in json format
+    console.log(JSON.stringify(this.smartPaymentAux));
   }
 
   ngOnInit(): void {
@@ -115,6 +120,25 @@ export class TableComponent {
       this.dataSource.push(element);
     }
     this.table?.renderRows();
+  }
+
+  saveTable() {
+    var id = localStorage.getItem('id');
+    this.smartPaymentAux.name = 'Smart Payment';
+    this.smartPaymentAux.description =
+      'A smart payment plan for your financial needs to get a car.';
+    this.smartPaymentAux.image =
+      'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
+    this.paymentService
+      .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   // Temporal

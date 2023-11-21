@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ErrorHandlerService } from './error-handler.service';
-import { UserModule } from '../model/user.model';
-import { AuthModule } from '../model/auth.model';
+import { ErrorHandlerService } from '../error/error-handler.service';
+import { UserModule } from '../../model/user.model';
+import { AuthModule } from '../../model/auth.model';
 import { catchError, Observable, retry } from 'rxjs';
 
 @Injectable({

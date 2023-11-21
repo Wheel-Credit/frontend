@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/auth/user.service';
 
 @Component({
   selector: 'app-payment-history-view',
