@@ -65,3 +65,9 @@ button:visited {
   background-color: #c04e4c;
   color: white;
 }
+
+.error-snackbar {
+  background-color: #f44336;
+  color: #ffffff;
+  font-size: 16px;
+}

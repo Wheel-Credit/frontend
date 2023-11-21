@@ -12,7 +12,7 @@
     <ng-container matColumnDef="pg">
       <th mat-header-cell *matHeaderCellDef>P.G.</th>
       <td mat-cell *matCellDef="let element">
-        <select [(ngModel)]="element.gracePeriod">
+        <select [(ngModel)]="element.gp">
           <option [value]="'T'">Total</option>
           <option [value]="'P'">Parcial</option>
           <option [value]="'S'">Sin plazo</option>
@@ -20,37 +20,43 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="saldo">
-      <th mat-header-cell *matHeaderCellDef>Saldo</th>
-      <td mat-cell *matCellDef="let element">{{ element.gracePeriod }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="interes">
-      <th mat-header-cell *matHeaderCellDef>Interes</th>
-      <td mat-cell *matCellDef="let element">{{ element.finalInstallment }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="segurodesgravamen">
-      <th mat-header-cell *matHeaderCellDef>Seguro de desgravamen</th>
-      <td mat-cell *matCellDef="let element">{{ element.interest }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="segurovehicular">
-      <th mat-header-cell *matHeaderCellDef>Seguro vehicular</th>
-      <td mat-cell *matCellDef="let element">{{ element.amortization }}</td>
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef>
+        Inicial Balance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.initialBalance }}</td>
     </ng-container>
 
     <ng-container matColumnDef="amortizacion">
-      <th mat-header-cell *matHeaderCellDef>Amortizacion</th>
+      <th mat-header-cell *matHeaderCellDef>Amortization</th>
       <td mat-cell *matCellDef="let element">{{ element.amortization }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="creditinsurance">
+      <th mat-header-cell *matHeaderCellDef>
+        Credit Insurance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.creditInsurance }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef>Interest</th>
+      <td mat-cell *matCellDef="let element">{{ element.interest }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="cuota">
-      <th mat-header-cell *matHeaderCellDef>Cuota</th>
-      <td mat-cell *matCellDef="let element">{{ element.amortization }}</td>
+      <th mat-header-cell *matHeaderCellDef>Installment</th>
+      <td mat-cell *matCellDef="let element">{{ element.installment }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="flujo">
+      <th mat-header-cell *matHeaderCellDef>Cash Flow</th>
+      <td mat-cell *matCellDef="let element">{{ element.cashFlow }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </body>
+
+<button (click)="updateTable()">jaja</button>

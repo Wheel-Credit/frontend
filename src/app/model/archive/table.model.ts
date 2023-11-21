@@ -1,4 +1,4 @@
-import { SmartPayment } from './smartPayment.model';
+import { SmartPayment } from '../smartPayment.model';
 import { tableData } from './tableData.model';
 
 export class paymentTable {
