@@ -99,6 +99,10 @@ button {
   background: -webkit-linear-gradient(right, #ec6e6e, #c42525);
 }
 
+.rmv-margin {
+  margin-top: 15px !important;
+}
+
 .forgot-pass {
   margin-top: 15px;
   text-align: center;
@@ -109,7 +113,12 @@ button {
 }
 
 .forgot-pass:hover {
-  color: red;
+  color: #c42525;
+}
+
+.forgot-login {
+  font-size: 10px !important;
+  color: #c42525 !important;
 }
 
 .social-media {
@@ -311,4 +320,10 @@ button {
 .cont.s-signup .sign-up {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+}
+
+.errorMessage {
+  color: rgb(175, 29, 29) !important;
+  font-size: 9px !important;
+  margin-left: 5px !important;
 }

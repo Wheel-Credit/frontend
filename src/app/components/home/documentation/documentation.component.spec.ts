@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserAccess2Component } from './user-access2.component';
+import { DocumentationComponent } from './documentation.component';
 
-describe('UserAccess2Component', () => {
-  let component: UserAccess2Component;
-  let fixture: ComponentFixture<UserAccess2Component>;
+describe('DocumentationComponent', () => {
+  let component: DocumentationComponent;
+  let fixture: ComponentFixture<DocumentationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserAccess2Component ]
+      declarations: [ DocumentationComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserAccess2Component);
+    fixture = TestBed.createComponent(DocumentationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

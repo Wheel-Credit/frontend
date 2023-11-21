@@ -1,0 +1,84 @@
+@import url("https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css");
+
+section.body {
+  color: black;
+  background-color: white;
+  border: none;
+  width: 80vw;
+  height: 70vh;
+  padding: 20px;
+  overflow: auto;
+}
+
+section.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: whitesmoke;
+  border: none;
+}
+
+form {
+  margin: 30px;
+  max-width: 800px;
+  width: 60%;
+}
+
+input,
+textarea {
+  width: 300px;
+}
+
+select,
+option {
+  color: black;
+}
+
+img {
+  max-width: 300px;
+  height: auto;
+  max-height: 150px;
+  border-radius: 5px;
+}
+
+button {
+  margin: 10px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.box {
+  padding: 10px;
+  margin: 10px;
+}
+
+.demo-table {
+  width: 100%;
+}
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-demo-name {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+.mat-column-demo-weight {
+  font-style: italic;
+}
+
+.mat-column-demo-symbol {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}

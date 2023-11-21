@@ -1,0 +1,116 @@
+button {
+  border: none;
+  background-color: #42a948;
+  margin-top: 20px;
+  color: white;
+  border: none;
+  transition: 0.3s;
+}
+
+button:hover {
+  border: none;
+  background-color: #49bb4f;
+  color: white;
+}
+
+img {
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 2px solid #ca2626;
+  width: 70%;
+}
+
+.container-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.container-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.conatiner-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 70%;
+}
+
+.container-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 20px;
+  width: 30%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.box {
+  width: 35%;
+}
+
+.box-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  height: 60%;
+}
+
+.box-img {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  height: 40%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.last-container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.green {
+  color: #42a948;
+}
+
+.red {
+  color: #a94442;
+}
+
+.center-div {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-action-text {
+  padding: 30px;
+}

@@ -24,16 +24,16 @@ A continuación, se presentan algunas imágenes que muestran diferentes páginas
 
 <div>
     <h3>User Access - Log In</h3>
-    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Logo Wheel Credit" height="180">
+    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Log In Wheel Credit" style="max-width: 100%;">
     <p>Aqui el usuario se podra registrar en la applicación.</p>
     <br/>
     <h3>User Access - Sign Up</h3>
-    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Logo Wheel Credit" height="180">
+    <img src="/src/assets/capture_user-access1of2.jpeg" alt="Sign in Wheel Credit" style="max-width: 100%;">
     <p>Aqui el usuario se podra registrar en la applicación.</p>
     <br/>
     <h3>Page not found (404)</h3>
-    <img src="/src/assets/github.png" alt="Logo Wheel Credit" height="180">
-    <p>Aqui el usuario se podra registrar en la applicación.</p>
+    <img src="/src/assets/capture_page_not_found.jpeg" alt="Page Not Found Wheel Credit" style="max-width: 100%;">
+    <p>Esta es la pagina que se mostrara cuando el usuario ingrese una URL que no existe.</p>
 <div/>
 
 ## Licencia

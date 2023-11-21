@@ -1,1 +1,48 @@
-<app-footer />
+<!-- Test Code -->
+<!-- <body>
+  <div class="app-container">
+    <app-header />
+      <app-documentation />
+    <app-footer />
+  </div>
+</body> -->
+
+<!-- Real Code -->
+<body>
+  <div class="app-container">
+    <div *ngIf="loading" class="loading-container">
+      <app-header-unsigned />
+      <div class="fh-center">
+        <img src="../../../assets/loading_pig.gif" alt="loading gif" />
+      </div>
+    </div>
+    <div *ngIf="!loading">
+      <div *ngIf="valideUser">
+        <app-header />
+        <app-documentation />
+      </div>
+      <div *ngIf="!valideUser">
+        <app-header-unsigned />
+        <div class="container">
+          <div class="row">
+            <div class="">
+              <div class="text-center">
+                <div class="four_zero_four_bg">
+                  <h1 class="text-center">403</h1>
+                </div>
+                <div class="contant_box_404">
+                  <h3 class="h2">Look like you're not signed in</h3>
+                  <p>you not user!</p>
+                  <button (click)="redirectToSignIn()" class="link_404">
+                    Sign in
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer />
+  </div>
+</body>

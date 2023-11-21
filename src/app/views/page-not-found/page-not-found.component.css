@@ -40,3 +40,8 @@
 .text-center {
   text-align: center;
 }
+
+button:hover {
+  cursor: pointer;
+  background-color: #413d3d;
+}

@@ -1,0 +1,27 @@
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  margin: 10px;
+  padding: 15px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #d64747;
+  border-radius: 20px;
+  width: 200px;
+  transition: background-color 0.5s;
+}
+
+a:hover {
+  cursor: pointer;
+  background-color: #413d3d;
+}
+
+.main {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

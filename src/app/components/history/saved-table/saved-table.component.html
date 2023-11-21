@@ -1,0 +1,115 @@
+<section class="body">
+  <form class="form" [formGroup]="smartPaymentForm">
+    <div class="flex">
+      <div class="box">
+        <div class="form-group">
+          <label for="name">Payment Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            required
+            (input)="updateForm()"
+            formControlName="name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Payment Description</label>
+          <textarea
+            type="text"
+            class="form-control"
+            id="description"
+            required
+            (input)="updateForm()"
+            formControlName="description"
+            rows="6"
+          ></textarea>
+        </div>
+      </div>
+      <div class="box">
+        <div class="form-group">
+          <label for="name">Image</label>
+          <input
+            type="text"
+            class="form-control"
+            id="image"
+            required
+            (input)="updateForm()"
+            formControlName="image"
+          />
+        </div>
+        <img
+          src="{{ smartPaymentAux.image }}"
+          alt="{{ smartPaymentAux.name }}"
+        />
+      </div>
+    </div>
+  </form>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 demo-table"
+  >
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="pg">
+      <th mat-header-cell *matHeaderCellDef>P.G.</th>
+      <td mat-cell *matCellDef="let element">
+        <select [(ngModel)]="element.gp">
+          <option [value]="'T'">Total</option>
+          <option [value]="'P'">Parcial</option>
+          <option [value]="'S'">Sin plazo</option>
+        </select>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef>
+        Inicial Balance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.initialBalance }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amortizacion">
+      <th mat-header-cell *matHeaderCellDef>Amortization</th>
+      <td mat-cell *matCellDef="let element">{{ element.amortization }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="creditinsurance">
+      <th mat-header-cell *matHeaderCellDef>
+        Credit Insurance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.creditInsurance }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef>Interest</th>
+      <td mat-cell *matCellDef="let element">{{ element.interest }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cuota">
+      <th mat-header-cell *matHeaderCellDef>Installment</th>
+      <td mat-cell *matCellDef="let element">{{ element.installment }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="flujo">
+      <th mat-header-cell *matHeaderCellDef>Cash Flow</th>
+      <td mat-cell *matCellDef="let element">{{ element.cashFlow }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</section>
+
+<section class="buttons">
+  <button class="btn btn-default ml-10px" (click)="updateTable()">
+    Update Table Data
+  </button>
+  <button class="btn btn-default ml-10px" (click)="closeTable()">
+    Close Table
+  </button>
+</section>

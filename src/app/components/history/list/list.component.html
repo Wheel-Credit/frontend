@@ -1,0 +1,42 @@
+<body>
+  <div class="container" [class.empty]="dataSource.length <= 0">
+    <div class="hero">
+      <h1>Payment Plans</h1>
+      <p *ngIf="dataSource.length <= 0">
+        You have no payment plans yet.<br />
+        Add a payment plan to get started.
+      </p>
+      <p *ngIf="dataSource.length > 0">
+        You have {{ dataSource.length }} payment plans.
+      </p>
+      <button class="btn btn-default ml-10px" [routerLink]="'/form'">
+        Add Payment Plan
+      </button>
+    </div>
+  </div>
+  <div class="container hr">
+    <div class="card" *ngFor="let item of dataSource; index as i">
+      <div class="card-body">
+        <div class="header">
+          <h1 class="card-title">
+            {{ item.name }}
+          </h1>
+        </div>
+        <div class="img-container">
+          <img src="{{ item.image }}" alt="" />
+        </div>
+        <p class="card-text">
+          {{ item.description }}
+        </p>
+        <div class="footer">
+          <button
+            class="btn btn-default ml-10px"
+            (click)="openSmartPaymentTable(item, i)"
+          >
+            View Payment Plan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
