@@ -6,6 +6,7 @@ import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -16,6 +17,7 @@ export class TableComponent {
   @ViewChild(MatTable) table: MatTable<FinanceTable> | undefined;
   smartPaymentForm: FormGroup;
   smartPaymentAux = new SmartPayment();
+  tableSaved = false;
 
   displayedColumns: string[] = [
     'index',
@@ -33,7 +35,8 @@ export class TableComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<TableComponent>,
     private paymentService: PaymentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.smartPaymentAux = data.formValues;
     this.smartPaymentForm = this.fb.group({
@@ -113,21 +116,46 @@ export class TableComponent {
 
   saveTable() {
     var id = localStorage.getItem('id');
-    this.smartPaymentAux.name = 'Smart Payment';
-    this.smartPaymentAux.description =
-      'A smart payment plan for your financial needs to get a car.';
-    this.smartPaymentAux.image =
-      'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
+
+    if (this.smartPaymentAux.name == null || this.smartPaymentAux.name == '') {
+      this.smartPaymentAux.name = 'Smart Payment';
+    }
+    if (
+      this.smartPaymentAux.description == null ||
+      this.smartPaymentAux.description == ''
+    ) {
+      this.smartPaymentAux.description =
+        'A smart payment plan for your financial needs to get a car.';
+    }
+    if (
+      this.smartPaymentAux.image == null ||
+      this.smartPaymentAux.image == ''
+    ) {
+      this.smartPaymentAux.image =
+        'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
+    }
+
+    this.smartPaymentForm.get('name')?.setValue(this.smartPaymentAux.name);
+    this.smartPaymentForm
+      .get('description')
+      ?.setValue(this.smartPaymentAux.description);
+    this.smartPaymentForm.get('image')?.setValue(this.smartPaymentAux.image);
+
     this.paymentService
       .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
       .subscribe(
         (response) => {
-          console.log(response);
+          this.tableSaved = true;
         },
         (error) => {
           console.log(error);
         }
       );
+  }
+
+  routeToHistory() {
+    this.dialogRef.close();
+    this.router.navigate(['/history']);
   }
 
   closeTable() {

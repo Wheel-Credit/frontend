@@ -109,8 +109,19 @@
   <button class="btn btn-default ml-10px" (click)="updateTable()">
     Update Table
   </button>
-  <button class="btn btn-default ml-10px" (click)="saveTable()">
+  <button
+    *ngIf="!tableSaved"
+    class="btn btn-default ml-10px"
+    (click)="saveTable()"
+  >
     Save Table
+  </button>
+  <button
+    *ngIf="tableSaved"
+    class="btn btn-default ml-10px"
+    (click)="routeToHistory()"
+  >
+    Go to your list
   </button>
   <button class="btn btn-default ml-10px" (click)="closeTable()">
     Close Table

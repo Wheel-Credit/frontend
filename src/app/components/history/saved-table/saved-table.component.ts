@@ -111,25 +111,6 @@ export class SavedTableComponent {
     this.smartPaymentAux.image = this.smartPaymentForm.get('image')?.value;
   }
 
-  saveTable() {
-    var id = localStorage.getItem('id');
-    this.smartPaymentAux.name = 'Smart Payment';
-    this.smartPaymentAux.description =
-      'A smart payment plan for your financial needs to get a car.';
-    this.smartPaymentAux.image =
-      'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
-    this.paymentService
-      .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
-      .subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-
   closeTable() {
     this.dialogRef.close(this.smartPaymentAux);
   }
