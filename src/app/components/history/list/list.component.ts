@@ -47,7 +47,11 @@ export class ListComponent {
             tempSmartPayment,
             updatedSmartPayment
           );
-
+          if (updatedSmartPayment.name === 'item deleted') {
+            this.dataSource.splice(index, 1);
+            this.dataSource = [...this.dataSource];
+            return;
+          }
           if (isDataChanged) {
             const config = new MatSnackBarConfig();
             config.duration = 5000;
