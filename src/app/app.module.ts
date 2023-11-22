@@ -22,6 +22,10 @@ import { TableComponent } from './components/form/table/table.component';
 import { ListComponent } from './components/history/list/list.component';
 import { DocumentationComponent } from './components/home/documentation/documentation.component';
 import { SavedTableComponent } from './components/history/saved-table/saved-table.component';
+import { CatalogViewComponent } from './views/catalog-view/catalog-view.component';
+import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
+import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,9 +45,18 @@ import { SavedTableComponent } from './components/history/saved-table/saved-tabl
     ListComponent,
     DocumentationComponent,
     SavedTableComponent,
+    CatalogViewComponent,
+    CatalogListComponent,
+    CatalogTableComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule, HttpClientModule, NgbModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MaterialModule,
+    HttpClientModule,
+    NgbModule,
+  ],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

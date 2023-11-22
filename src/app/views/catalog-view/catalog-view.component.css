@@ -1,0 +1,103 @@
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: "Arvo", serif;
+  justify-content: center;
+  align-items: center;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #302f2f;
+  margin: 20px 0;
+  display: inline-block;
+  border-radius: 10px;
+}
+.contant_box_404 {
+  margin-top: -50px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.loading-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fh-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+app-footer {
+  margin-top: auto;
+}
+
+app-finance-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  margin: 10px;
+  padding: 15px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #d64747;
+  border-radius: 20px;
+  width: 200px;
+  transition: background-color 0.5s;
+}
+
+a:hover {
+  cursor: pointer;
+  background-color: #413d3d;
+}
+
+.minHieght {
+  min-height: 90vh;
+}

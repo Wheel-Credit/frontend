@@ -1,19 +1,22 @@
 <body>
   <div class="container" [class.empty]="dataSource.length <= 0">
     <div class="hero">
-      <h1>Payment Plans</h1>
-      <p *ngIf="dataSource.length <= 0">
-        You have no payment plans yet.<br />
-        Add a payment plan to get started.
-      </p>
+      <h1 class="red">Payment Plans</h1>
+      <p *ngIf="dataSource.length <= 0">We have no payment plans yet.</p>
       <p *ngIf="dataSource.length > 0">
-        You have {{ dataSource.length }} payment plans.
+        We have {{ dataSource.length }} payment plans.
       </p>
-      <button class="btn btn-default ml-10px" [routerLink]="'/form'">
-        Add Payment Plan
-      </button>
+      <p>
+        This page displays {{ dataSource.length }} payment plans for different
+        types of cars. You can choose any plan and modify certain values, like
+        interest rates and grace periods, to tailor it to your specific needs
+        and financial situation. By customizing these values, you can create a
+        more realistic and manageable payment plan that fits your budget and
+        goals.
+      </p>
     </div>
   </div>
+
   <div class="container hr">
     <div class="card" *ngFor="let item of dataSource; index as i">
       <div class="card-body">

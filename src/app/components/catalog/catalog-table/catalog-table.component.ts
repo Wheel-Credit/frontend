@@ -1,23 +1,25 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { irr, npv } from 'financial';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SmartPayment } from 'src/app/model/smartPayment.model';
-import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
-import { PaymentService } from 'src/app/services/payment/payment.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { irr, npv } from 'financial';
+import { FinanceTable } from 'src/app/model/financeTable.model';
+import { SmartPayment } from 'src/app/model/smartPayment.model';
+import { PaymentService } from 'src/app/services/payment/payment.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  selector: 'app-catalog-table',
+  templateUrl: './catalog-table.component.html',
+  styleUrls: ['./catalog-table.component.css'],
 })
-export class TableComponent {
-  @ViewChild(MatTable) table: MatTable<FinanceTable> | undefined;
+export class CatalogTableComponent {
+  @ViewChild(MatTable) table: MatTable<CatalogTableComponent> | undefined;
   smartPaymentForm: FormGroup;
   smartPaymentAux = new SmartPayment();
   tableSaved = false;
+  currencyType = '$';
 
   displayedColumns: string[] = [
     'index',
@@ -33,85 +35,29 @@ export class TableComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TableComponent>,
+    private dialogRef: MatDialogRef<CatalogTableComponent>,
     private paymentService: PaymentService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public currencyPipe: CurrencyPipe
   ) {
     this.smartPaymentAux = data.formValues;
-    // console.log(
-    //   'new SmartPayment(' +
-    //     '1,' +
-    //     "'name'," +
-    //     "'description'," +
-    //     "'image'," +
-    //     this.smartPaymentAux.sellingPriceAsset +
-    //     ',' +
-    //     this.smartPaymentAux.paymentPlanType +
-    //     ',' +
-    //     this.smartPaymentAux.initialInstallment +
-    //     ',' +
-    //     this.smartPaymentAux.finalInstallment +
-    //     ',' +
-    //     this.smartPaymentAux.interestRate +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.interestType +
-    //     "'" +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.capitalization +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.paymentFrequency +
-    //     ',' +
-    //     this.smartPaymentAux.notaryCosts +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.notaryCostsType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.registrationCosts +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.registrationCostsType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.appraisal +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.appraisalType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.studyCommission +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.studyCommissionType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.activationCommission +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.activationCommissionType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.gps +
-    //     ',' +
-    //     this.smartPaymentAux.shippingCosts +
-    //     ',' +
-    //     this.smartPaymentAux.administrativeExpenses +
-    //     ',' +
-    //     this.smartPaymentAux.lifeInsurance +
-    //     ',' +
-    //     this.smartPaymentAux.riskInsurance +
-    //     ',' +
-    //     this.smartPaymentAux.discountRate +
-    //     ')'
-    // );
     this.smartPaymentForm = this.fb.group({
-      name: [this.smartPaymentAux.name],
-      description: [this.smartPaymentAux.description],
-      image: [this.smartPaymentAux.image],
+      interestRate: [this.smartPaymentAux.interestRate, Validators.required],
+      interestType: [this.smartPaymentAux.interestType, Validators.required],
+      capitalization: [
+        this.smartPaymentAux.capitalization,
+        Validators.required,
+      ],
+      currencySign: [this.currencyType, Validators.required],
+      notaryCosts: [this.smartPaymentAux.notaryCosts],
+      notaryCostsType: [this.smartPaymentAux.notaryCostsType],
+      registrationCosts: [this.smartPaymentAux.registrationCosts],
+      registrationCostsType: [this.smartPaymentAux.registrationCostsType],
+      appraisal: [this.smartPaymentAux.appraisal],
+      appraisalType: [this.smartPaymentAux.appraisalType],
+      studyCommission: [this.smartPaymentAux.studyCommission],
+      studyCommissionType: [this.smartPaymentAux.studyCommissionType],
     });
   }
 
@@ -144,6 +90,76 @@ export class TableComponent {
     this.table?.renderRows();
   }
 
+  changeCurrency() {
+    if (this.currencyType == this.smartPaymentForm.get('currencySign')?.value)
+      return;
+    if (this.smartPaymentForm.get('currencySign')?.value == '$') {
+      this.smartPaymentForm
+        .get('notaryCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('notaryCosts')?.value) / 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('registrationCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('registrationCosts')?.value) /
+            3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('appraisal')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('appraisal')?.value) / 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('studyCommission')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('studyCommission')?.value) /
+            3.72
+          ).toFixed(2)
+        );
+    } else {
+      this.smartPaymentForm
+        .get('notaryCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('notaryCosts')?.value) * 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('registrationCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('registrationCosts')?.value) *
+            3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('appraisal')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('appraisal')?.value) * 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('studyCommission')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('studyCommission')?.value) *
+            3.72
+          ).toFixed(2)
+        );
+    }
+
+    this.updateTable();
+  }
+
   updateTable() {
     for (let index = 0; index < this.dataSource.length; index++) {
       const element = this.dataSource[index].gp;
@@ -173,43 +189,42 @@ export class TableComponent {
       element.gp = this.List_of_Grace_Periods[index];
       this.dataSource.push(element);
     }
+    this.currencyType = this.smartPaymentForm.get('currencySign')?.value;
     this.table?.renderRows();
   }
 
   updateForm() {
-    this.smartPaymentAux.name = this.smartPaymentForm.get('name')?.value;
-    this.smartPaymentAux.description =
-      this.smartPaymentForm.get('description')?.value;
-    this.smartPaymentAux.image = this.smartPaymentForm.get('image')?.value;
+    this.smartPaymentAux.interestRate =
+      this.smartPaymentForm.get('interestRate')?.value;
+    this.smartPaymentAux.interestType =
+      this.smartPaymentForm.get('interestType')?.value;
+    this.smartPaymentAux.capitalization =
+      this.smartPaymentForm.get('capitalization')?.value;
+    this.smartPaymentAux.notaryCosts =
+      this.smartPaymentForm.get('notaryCosts')?.value;
+    this.smartPaymentAux.notaryCostsType =
+      this.smartPaymentForm.get('notaryCostsType')?.value;
+    this.smartPaymentAux.registrationCosts =
+      this.smartPaymentForm.get('registrationCosts')?.value;
+    this.smartPaymentAux.registrationCostsType = this.smartPaymentForm.get(
+      'registrationCostsType'
+    )?.value;
+    this.smartPaymentAux.appraisal =
+      this.smartPaymentForm.get('appraisal')?.value;
+    this.smartPaymentAux.appraisalType =
+      this.smartPaymentForm.get('appraisalType')?.value;
+    this.smartPaymentAux.studyCommission =
+      this.smartPaymentForm.get('studyCommission')?.value;
+    this.smartPaymentAux.studyCommissionType = this.smartPaymentForm.get(
+      'studyCommissionType'
+    )?.value;
+    if (this.smartPaymentForm.valid) {
+      this.updateTable();
+    }
   }
 
   saveTable() {
     var id = localStorage.getItem('id');
-
-    if (this.smartPaymentAux.name == null || this.smartPaymentAux.name == '') {
-      this.smartPaymentAux.name = 'Smart Payment';
-    }
-    if (
-      this.smartPaymentAux.description == null ||
-      this.smartPaymentAux.description == ''
-    ) {
-      this.smartPaymentAux.description =
-        'A smart payment plan for your financial needs to get a car.';
-    }
-    if (
-      this.smartPaymentAux.image == null ||
-      this.smartPaymentAux.image == ''
-    ) {
-      this.smartPaymentAux.image =
-        'https://upload.wikimedia.org/wikipedia/commons/5/5a/Car_icon_alone.png';
-    }
-
-    this.smartPaymentForm.get('name')?.setValue(this.smartPaymentAux.name);
-    this.smartPaymentForm
-      .get('description')
-      ?.setValue(this.smartPaymentAux.description);
-    this.smartPaymentForm.get('image')?.setValue(this.smartPaymentAux.image);
-
     this.paymentService
       .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
       .subscribe(
