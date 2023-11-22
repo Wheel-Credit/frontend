@@ -225,6 +225,12 @@ export class CatalogTableComponent {
 
   saveTable() {
     var id = localStorage.getItem('id');
+    console.log(JSON.stringify(this.smartPaymentAux));
+    // limit description size to 150 chracters
+    this.smartPaymentAux.description = this.smartPaymentAux.description?.slice(
+      0,
+      150
+    );
     this.paymentService
       .postPayment(parseInt(id ?? ''), this.smartPaymentAux)
       .subscribe(
@@ -310,6 +316,17 @@ export class CatalogTableComponent {
 
   //Flujo
   Flow: number[] = []; ///////////////////////////
+
+  //Indicadores de Rentabilidad
+  //TIR
+  DiscountRate: number = 0;
+  DiscountRatePorcentage: number = 0;
+  TIR: number = 0;
+  TIRPorcentage: number = 0;
+  TCEA: number = 0;
+  TCEAPorcentage: number = 0;
+  VAN: number = 0;
+  VANaux: number = 0;
 
   // Algoritmos
   Algorithm() {
@@ -424,14 +441,26 @@ export class CatalogTableComponent {
       this.smartPaymentAux.paymentFrequency!
     );
 
+    //Tasa de Descuento
+    this.DiscountRate = this.getDiscountRate(
+      this.smartPaymentAux.discountRate!,
+      this.smartPaymentAux.paymentFrequency!
+    );
+    this.DiscountRatePorcentage = parseFloat(
+      (this.DiscountRate * 100).toFixed(7)
+    );
+
     //TIR
-    var TIR = this.getTIR(LoanAmount);
+    this.TIR = this.getTIR(LoanAmount);
+    this.TIRPorcentage = parseFloat((this.TIR * 100).toFixed(7));
 
     //TCEA
-    var TCEA = this.getTCEA(TIR, this.smartPaymentAux.paymentFrequency!);
+    this.TCEA = this.getTCEA(this.TIR, this.smartPaymentAux.paymentFrequency!);
+    this.TCEAPorcentage = parseFloat((this.TCEA * 100).toFixed(7));
 
     //VAN
-    var VAN = this.getVAN(LoanAmount, DiscountRate);
+    this.VAN = this.getVAN(LoanAmount, this.DiscountRate);
+    this.VANaux = parseFloat(this.VAN.toFixed(2));
 
     /*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
     const npvCalculado = flujosEfectivo.reduce((npv, flujo, t) => npv + (flujo / Math.pow(1 + 0.10, t)), 0);

@@ -6,6 +6,7 @@ import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-saved-table',
@@ -33,7 +34,8 @@ export class SavedTableComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SavedTableComponent>,
     private paymentService: PaymentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.smartPaymentAux = data.formValues;
     this.smartPaymentForm = this.fb.group({
@@ -113,6 +115,27 @@ export class SavedTableComponent {
 
   closeTable() {
     this.dialogRef.close(this.smartPaymentAux);
+  }
+
+  deleteData() {
+    const snackBarRef = this.snackBar.open(
+      'Are you sure you want to delete this data',
+      'Confirm',
+      {
+        duration: 3000,
+      }
+    );
+    snackBarRef.onAction().subscribe(() => {
+      this.paymentService
+        .deletePayment(this.smartPaymentAux.id!)
+        .subscribe((data) => {
+          this.snackBar.open('Data deleted successfully', '', {
+            duration: 1000,
+          });
+          this.smartPaymentAux.name = 'item deleted';
+        });
+      this.dialogRef.close(this.smartPaymentAux);
+    });
   }
 
   // Temporal
