@@ -57,6 +57,21 @@ button {
   margin: 10px;
 }
 
+.info-item {
+  margin: auto;
+  padding: 10px;
+}
+
+.info-label {
+  font-weight: bold;
+  padding: 0%;
+}
+
+.info-value {
+  display: block;
+  margin-top: 0px;
+}
+
 .demo-table {
   width: 100%;
 }
