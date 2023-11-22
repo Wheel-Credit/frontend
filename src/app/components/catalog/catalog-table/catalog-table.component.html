@@ -1,0 +1,278 @@
+<section class="body">
+  <div class="center">
+    <h1>{{ smartPaymentAux.name }}</h1>
+  </div>
+  <hr />
+  <form class="form" [formGroup]="smartPaymentForm">
+    <div class="flex">
+      <div class="box">
+        <div class="form-group">
+          <label for="interestRate">Interest Rate</label>
+          <input
+            type="text"
+            class="form-control"
+            id="interestRate"
+            required
+            (input)="updateForm()"
+            formControlName="interestRate"
+          />
+        </div>
+        <div class="form-group">
+          <label for="interestType">Interest Rate Type</label>
+          <select
+            required
+            id="interestType"
+            class="form-control"
+            formControlName="interestType"
+            (input)="updateForm()"
+          >
+            <option>TNA</option>
+            <option>TEA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="capitalization">Capitalization Period</label>
+          <select
+            required
+            id="capitalization"
+            class="form-control"
+            formControlName="capitalization"
+            (input)="updateForm()"
+          >
+            <option>Diaria</option>
+            <option>Mensual</option>
+          </select>
+        </div>
+      </div>
+      <div class="box">
+        <div class="form-group">
+          <label for="currencySign">Currency</label>
+          <select
+            required
+            id="currencySign"
+            class="form-control"
+            formControlName="currencySign"
+            (change)="changeCurrency()"
+          >
+            <option>S/.</option>
+            <option>$</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="box">
+        <div class="form-group">
+          <label for="notaryCosts">Notary fees {{ currencyType }}</label>
+          <input
+            id="notaryCosts"
+            formControlName="notaryCosts"
+            type="number"
+            [min]="0"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="appraisal">Appraisal {{ currencyType }}</label>
+          <input
+            id="appraisal"
+            formControlName="appraisal"
+            type="number"
+            [min]="0"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="registrationCosts"
+            >Registry fees {{ currencyType }}</label
+          >
+          <input
+            id="registrationCosts"
+            formControlName="registrationCosts"
+            type="number"
+            [min]="0"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="studyCommission">Study fee {{ currencyType }}</label>
+          <input
+            id="studyCommission"
+            formControlName="studyCommission"
+            type="number"
+            [min]="0"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="form-group">
+          <label for="notaryCostsType">Tipo de pago</label>
+          <select
+            id="notaryCostsType"
+            class="form-control"
+            formControlName="notaryCostsType"
+          >
+            <option>Cash</option>
+            <option>Loan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="appraisalType">Tipo de pago</label>
+          <select
+            id="appraisalType"
+            class="form-control"
+            formControlName="appraisalType"
+          >
+            <option>Cash</option>
+            <option>Loan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="registrationCostsType">Tipo de pago</label>
+          <select
+            id="registrationCostsType"
+            class="form-control"
+            formControlName="registrationCostsType"
+          >
+            <option>Cash</option>
+            <option>Loan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="studyCommissionType">Tipo de pago</label>
+          <select
+            id="studyCommissionType"
+            class="form-control"
+            formControlName="studyCommissionType"
+          >
+            <option>Cash</option>
+            <option>Loan</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 demo-table"
+  >
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef class="th-small">No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="pg">
+      <th mat-header-cell *matHeaderCellDef class="th-small">P.G.</th>
+      <td mat-cell *matCellDef="let element">
+        <select [(ngModel)]="element.gp">
+          <option [value]="'T'">Total</option>
+          <option [value]="'P'">Parcial</option>
+          <option [value]="'S'">Sin plazo</option>
+        </select>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef>
+        Inicial Balance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$"
+            ? element.initialBalance
+            : element.initialBalance * 3.72
+          ) | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amortizacion">
+      <th mat-header-cell *matHeaderCellDef>Amortization</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$"
+            ? element.amortization
+            : element.amortization * 3.72
+          ) | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creditinsurance">
+      <th mat-header-cell *matHeaderCellDef>
+        Credit Insurance Final Installment
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$"
+            ? element.creditInsurance
+            : element.creditInsurance * 3.72
+          ) | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef>Interest</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$" ? element.interest : element.interest * 3.72)
+            | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cuota">
+      <th mat-header-cell *matHeaderCellDef>Installment</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$"
+            ? element.installment
+            : element.installment * 3.72
+          ) | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="flujo">
+      <th mat-header-cell *matHeaderCellDef>Cash Flow</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (currencyType == "$" ? element.cashFlow : element.cashFlow * 3.72)
+            | currency : currencyType
+        }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</section>
+
+<section class="buttons">
+  <button class="btn btn-default ml-10px" (click)="updateTable()">
+    Update Table
+  </button>
+  <button
+    *ngIf="!tableSaved"
+    class="btn btn-default ml-10px"
+    (click)="saveTable()"
+  >
+    Save Table
+  </button>
+  <button
+    *ngIf="tableSaved"
+    class="btn btn-default ml-10px"
+    (click)="routeToHistory()"
+  >
+    Go to your list
+  </button>
+  <button class="btn btn-default ml-10px" (click)="closeTable()">
+    Close Table
+  </button>
+</section>

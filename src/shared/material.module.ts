@@ -18,14 +18,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [],
@@ -58,6 +58,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatDialogModule,
     MatSnackBarModule,
     MatMenuModule,
+    CommonModule,
+    BrowserModule,
   ],
 
   exports: [
@@ -89,6 +91,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatDialogModule,
     MatSnackBarModule,
     MatMenuModule,
+    CommonModule,
+    BrowserModule,
   ],
 })
 export class MaterialModule {}
