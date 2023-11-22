@@ -61,6 +61,11 @@ button {
   width: 100%;
 }
 
+.red-btn:hover {
+  background-color: #d64747;
+  color: white;
+}
+
 .mat-column-demo-position {
   width: 32px;
   border-right: 1px solid currentColor;
