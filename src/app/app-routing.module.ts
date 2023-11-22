@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { PaymentFormViewComponent } from './views/payment-form-view/payment-form-view.component';
 import { PaymentHistoryViewComponent } from './views/payment-history-view/payment-history-view.component';
 import { CatalogViewComponent } from './views/catalog-view/catalog-view.component';
+import { ProfileViewComponent } from './views/profile-view/profile-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'form', component: PaymentFormViewComponent },
   { path: 'history', component: PaymentHistoryViewComponent },
   { path: 'catalog', component: CatalogViewComponent },
+  { path: 'profile', component: ProfileViewComponent},
   { path: '**', component: PageNotFoundComponent },
 ];
 

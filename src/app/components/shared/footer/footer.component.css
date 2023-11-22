@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 footer {
+  position: sticky;
   height: auto;
   padding-top: 40px;
   color: #fff !important;

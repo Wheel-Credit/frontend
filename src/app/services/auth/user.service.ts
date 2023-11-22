@@ -33,4 +33,11 @@ export class UserService {
       .get(`${this.baseUrl}`, this.getHttpOptions())
       .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
   }
+
+  getUserById() {
+    const id = localStorage.getItem('id');
+    return this.http
+      .get(`${this.baseUrl}/${id}`, this.getHttpOptions())
+      .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
+  }
 }

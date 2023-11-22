@@ -1,0 +1,25 @@
+<div class="profile-container">
+    <div class="card-container">
+        <img class="round" *ngIf="userData?.imageUrl; else defaultImage" [src]="userData.imageUrl" alt="user" />
+        <ng-template #defaultImage>
+            <img class="round" [src]="defaultImageUrl" alt="user" />
+        </ng-template>
+        <h3>{{userData?.name +' '+ userData?.lastname}}</h3>
+        <br>
+        <p>{{userData?.description}}</p>
+        <div class="buttons">
+            <button class="primary" (click)="logOut()">
+                Log Out
+            </button>
+            <button class="secondary">
+                Edit Profile
+            </button>
+        </div>
+        <div class="skills">
+            <h6>User Information</h6>
+            <ul>
+                <li style="text-align: center;"><b>Mail: </b>{{userData?.email}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,9 @@ import { CatalogViewComponent } from './views/catalog-view/catalog-view.componen
 import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
 import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
 import { CurrencyPipe } from '@angular/common';
+import { ProfileViewComponent } from './views/profile-view/profile-view.component';
+import { ProfileComponentComponent } from './components/profile/profile-component/profile-component.component';
+import { ProfileEditComponentComponent } from './components/profile/profile-edit-component/profile-edit-component.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { CurrencyPipe } from '@angular/common';
     CatalogViewComponent,
     CatalogListComponent,
     CatalogTableComponent,
+    ProfileViewComponent,
+    ProfileComponentComponent,
+    ProfileEditComponentComponent,
   ],
   imports: [
     BrowserModule,
