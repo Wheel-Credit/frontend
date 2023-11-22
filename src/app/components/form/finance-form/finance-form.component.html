@@ -1,112 +1,63 @@
 <form class="form" [formGroup]="smartPaymentForm">
-  <p>Datos a Ingresar</p>
+  <p>
+    Data to enter</p>
 
   <div class="flex">
     <div class="form-group">
-      <label for="sellingPriceAsset">Precio de Venta del Activo</label>
-      <input
-        type="number"
-        class="form-control"
-        id="sellingPriceAsset"
-        required
-        (input)="updateFormReadiness()"
-        formControlName="sellingPriceAsset"
-        [min]="1"
-      />
+      <label for="sellingPriceAsset">Selling Price Asset</label>
+      <input type="number" class="form-control" id="sellingPriceAsset" required (input)="updateFormReadiness()"
+        formControlName="sellingPriceAsset" [min]="1" />
     </div>
 
     <div class="form-group">
-      <label for="planType">Tipo de plan de pagos</label>
-      <select
-        required
-        id="planType"
-        class="form-control"
-        formControlName="paymentPlanType"
-        (input)="updateFormReadiness()"
-      >
+      <label for="planType">Plan Type</label>
+      <select required id="planType" class="form-control" formControlName="paymentPlanType"
+        (input)="updateFormReadiness()">
         <option>24</option>
         <option>36</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="initialInstallment">% Cuota Inicial</label>
-      <input
-        type="number"
-        class="form-control"
-        id="initialInstallment"
-        required
-        formControlName="initialInstallment"
-        (input)="updateFormReadiness()"
-        [min]="0"
-      />
+      <label for="initialInstallment">% Initial Installment</label>
+      <input type="number" class="form-control" id="initialInstallment" required formControlName="initialInstallment"
+        (input)="updateFormReadiness()" [min]="0" />
     </div>
 
     <div class="form-group">
-      <label for="finalInstallment">% Cuota Final</label>
-      <input
-        type="number"
-        class="form-control"
-        id="finalInstallment"
-        required
-        formControlName="finalInstallment"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="finalInstallment">% Final Installment</label>
+      <input type="number" class="form-control" id="finalInstallment" required formControlName="finalInstallment"
+        [min]="0" (input)="updateFormReadiness()" />
     </div>
 
     <div class="form-group">
-      <label for="interestRate">% Tasa de Interés</label>
-      <input
-        type="number"
-        class="form-control"
-        id="interestRate"
-        required
-        formControlName="interestRate"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="interestRate">% Interes Rate</label>
+      <input type="number" class="form-control" id="interestRate" required formControlName="interestRate" [min]="0"
+        (input)="updateFormReadiness()" />
     </div>
 
     <div class="form-group">
-      <label for="interestType">Tipo de tasa de Interés</label>
-      <select
-        required
-        id="interestType"
-        class="form-control"
-        formControlName="interestType"
-        (input)="updateFormReadiness()"
-      >
+      <label for="interestType">Interes Type</label>
+      <select required id="interestType" class="form-control" formControlName="interestType"
+        (input)="updateFormReadiness()">
         <option>TNA</option>
         <option>TEA</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="capitalization">Periodo de capitalización</label>
-      <select
-        required
-        id="capitalization"
-        class="form-control"
-        formControlName="capitalization"
-        (input)="updateFormReadiness()"
-      >
+      <label for="capitalization">Capitalization</label>
+      <select required id="capitalization" class="form-control" formControlName="capitalization"
+        (input)="updateFormReadiness()">
         <option>Diaria</option>
         <option>Mensual</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="paymentFrequency">Frecuencia de pago</label>
-      <input
-        required
-        id="paymentFrequency"
-        formControlName="paymentFrequency"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="paymentFrequency">Payment Frequency</label>
+      <input required id="paymentFrequency" formControlName="paymentFrequency" type="number" class="form-control"
+        [min]="0" (input)="updateFormReadiness()" />
     </div>
   </div>
 
@@ -115,27 +66,18 @@
       -->
 
   <hr />
-  <p>Costos y gastos Iniciales</p>
+  <p>
+    Initial costs and expenses</p>
 
   <div class="flex">
     <div>
-      <label for="notaryCosts">Costes Notariales</label>
-      <input
-        id="notaryCosts"
-        formControlName="notaryCosts"
-        type="number"
-        [min]="0"
-        class="form-control"
-      />
+      <label for="notaryCosts">Notary Costs</label>
+      <input id="notaryCosts" formControlName="notaryCosts" type="number" [min]="0" class="form-control" />
     </div>
     <div>
       <div class="form-group">
-        <label for="notaryCostsType">Tipo de pago</label>
-        <select
-          id="notaryCostsType"
-          class="form-control"
-          formControlName="notaryCostsType"
-        >
+        <label for="notaryCostsType">Notary Costs Type</label>
+        <select id="notaryCostsType" class="form-control" formControlName="notaryCostsType">
           <option>Cash</option>
           <option>Loan</option>
         </select>
@@ -145,23 +87,13 @@
 
   <div class="flex">
     <div>
-      <label for="registrationCosts">Costes Registrales</label>
-      <input
-        id="registrationCosts"
-        formControlName="registrationCosts"
-        type="number"
-        [min]="0"
-        class="form-control"
-      />
+      <label for="registrationCosts">Registration Costs</label>
+      <input id="registrationCosts" formControlName="registrationCosts" type="number" [min]="0" class="form-control" />
     </div>
     <div>
       <div class="form-group">
-        <label for="registrationCostsType">Tipo de pago</label>
-        <select
-          id="registrationCostsType"
-          class="form-control"
-          formControlName="registrationCostsType"
-        >
+        <label for="registrationCostsType">Registration Costs Type</label>
+        <select id="registrationCostsType" class="form-control" formControlName="registrationCostsType">
           <option>Cash</option>
           <option>Loan</option>
         </select>
@@ -171,23 +103,13 @@
 
   <div class="flex">
     <div>
-      <label for="appraisal">Tasación</label>
-      <input
-        id="appraisal"
-        formControlName="appraisal"
-        type="number"
-        [min]="0"
-        class="form-control"
-      />
+      <label for="appraisal">Appraisal</label>
+      <input id="appraisal" formControlName="appraisal" type="number" [min]="0" class="form-control" />
     </div>
     <div>
       <div class="form-group">
-        <label for="appraisalType">Tipo de pago</label>
-        <select
-          id="appraisalType"
-          class="form-control"
-          formControlName="appraisalType"
-        >
+        <label for="appraisalType">Appraisal Type</label>
+        <select id="appraisalType" class="form-control" formControlName="appraisalType">
           <option>Cash</option>
           <option>Loan</option>
         </select>
@@ -198,22 +120,12 @@
   <div class="flex">
     <div>
       <label for="studyCommission">Comisión de estudio</label>
-      <input
-        id="studyCommission"
-        formControlName="studyCommission"
-        type="number"
-        [min]="0"
-        class="form-control"
-      />
+      <input id="studyCommission" formControlName="studyCommission" type="number" [min]="0" class="form-control" />
     </div>
     <div>
       <div class="form-group">
-        <label for="studyCommissionType">Tipo de pago</label>
-        <select
-          id="studyCommissionType"
-          class="form-control"
-          formControlName="studyCommissionType"
-        >
+        <label for="studyCommissionType">Study Comission Type</label>
+        <select id="studyCommissionType" class="form-control" formControlName="studyCommissionType">
           <option>Cash</option>
           <option>Loan</option>
         </select>
@@ -223,23 +135,14 @@
 
   <div class="flex">
     <div>
-      <label for="activationCommission">Comisión de activación</label>
-      <input
-        id="activationCommission"
-        formControlName="activationCommission"
-        type="number"
-        [min]="0"
-        class="form-control"
-      />
+      <label for="activationCommission">Activation Comission</label>
+      <input id="activationCommission" formControlName="activationCommission" type="number" [min]="0"
+        class="form-control" />
     </div>
     <div>
       <div class="form-group">
-        <label for="activationCommissionType">Tipo de pago</label>
-        <select
-          id="activationCommissionType"
-          class="form-control"
-          formControlName="activationCommissionType"
-        >
+        <label for="activationCommissionType">Activation Comission Type</label>
+        <select id="activationCommissionType" class="form-control" formControlName="activationCommissionType">
           <option>Cash</option>
           <option>Loan</option>
         </select>
@@ -248,70 +151,36 @@
   </div>
 
   <hr />
-  <p>Costos y gastos Periodicos</p>
+  <p>
+    Periodic costs and expenses</p>
   <div class="flex">
     <div class="form-group">
       <label for="gps">GPS</label>
-      <input
-        required
-        id="gps"
-        formControlName="gps"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <input required id="gps" formControlName="gps" type="number" class="form-control" [min]="0"
+        (input)="updateFormReadiness()" />
     </div>
 
     <div class="form-group">
-      <label for="shippingCosts">Portes</label>
-      <input
-        required
-        id="shippingCosts"
-        formControlName="shippingCosts"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="shippingCosts">Shipping Costs</label>
+      <input required id="shippingCosts" formControlName="shippingCosts" type="number" class="form-control" [min]="0"
+        (input)="updateFormReadiness()" />
     </div>
     <div class="form-group">
-      <label for="administrativeExpenses">Gastos de Administración</label>
-      <input
-        required
-        id="administrativeExpenses"
-        formControlName="administrativeExpenses"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="administrativeExpenses">Administrative Expenses</label>
+      <input required id="administrativeExpenses" formControlName="administrativeExpenses" type="number"
+        class="form-control" [min]="0" (input)="updateFormReadiness()" />
     </div>
 
     <div class="form-group">
-      <label for="lifeInsurance">% de Seguro de Desgravamen</label>
-      <input
-        required
-        id="lifeInsurance"
-        formControlName="lifeInsurance"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="lifeInsurance">% Life Insurance</label>
+      <input required id="lifeInsurance" formControlName="lifeInsurance" type="number" class="form-control" [min]="0"
+        (input)="updateFormReadiness()" />
     </div>
 
     <div class="form-group">
-      <label for="riskInsurance">% de Seguro de Riesgo</label>
-      <input
-        required
-        id="riskInsurance"
-        formControlName="riskInsurance"
-        type="number"
-        class="form-control"
-        [min]="0"
-        (input)="updateFormReadiness()"
-      />
+      <label for="riskInsurance">% Risk Insurance</label>
+      <input required id="riskInsurance" formControlName="riskInsurance" type="number" class="form-control" [min]="0"
+        (input)="updateFormReadiness()" />
     </div>
   </div>
 
@@ -319,37 +188,21 @@
   <p>Costo de oportunidad</p>
 
   <div class="form-group ml-10px">
-    <label for="discountRate">Tasa de descuento</label>
-    <input
-      required
-      id="discountRate"
-      formControlName="discountRate"
-      type="number"
-      class="form-control"
-      [min]="0"
-      (input)="updateFormReadiness()"
-    />
+    <label for="discountRate">Discount Rate</label>
+    <input required id="discountRate" formControlName="discountRate" type="number" class="form-control" [min]="0"
+      (input)="updateFormReadiness()" />
   </div>
 
   <!-- 
         Button
       -->
 
-  <button
-    type="button"
-    class="btn btn-default ml-10px"
-    [class.green_button]="formReady"
-    [class.red_button]="!formReady"
-    (click)="onSubmit()"
-  >
+  <button type="button" class="btn btn-default ml-10px" [class.green_button]="formReady" [class.red_button]="!formReady"
+    (click)="onSubmit()">
     Create Table
   </button>
-  <button
-    type="button"
-    class="btn btn-default ml-10px .green_button"
-    [class.green_button]="true"
-    (click)="inputRandomData()"
-  >
+  <button type="button" class="btn btn-default ml-10px .green_button" [class.green_button]="true"
+    (click)="inputRandomData()">
     Random Data
   </button>
 </form>
