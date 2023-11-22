@@ -106,6 +106,7 @@ td {
   flex-direction: row;
   justify-content: start;
   width: 100%;
+  margin: 0 20%;
 }
 
 .box {
@@ -115,6 +116,15 @@ td {
 
 .demo-table {
   width: 100%;
+}
+
+.info-item {
+  margin-bottom: 15px;
+  width: 300px;
+}
+
+.info-value {
+  padding-left: 10px;
 }
 
 .mat-column-demo-position {

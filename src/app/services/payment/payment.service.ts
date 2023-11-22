@@ -41,4 +41,10 @@ export class PaymentService {
       .put(`${this.baseUrl}/${id}/update`, payment, this.getHttpOptions())
       .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
   }
+
+  deletePayment(id: number) {
+    return this.http
+      .delete(`${this.baseUrl}/${id}/delete`, this.getHttpOptions())
+      .pipe(retry(2), catchError(this.errorHandlerService.handleHttpError));
+  }
 }
