@@ -424,6 +424,48 @@ export class TableComponent {
     const npvBiblioteca = npv(0.10, flujosEfectivo);
     console.log("NPV Calculado con financial library: ", npvBiblioteca); */
 
+
+    console.log('TEA: ' + TEA);
+    console.log('TEP: ' + TEP);
+    console.log('Numero de Cuotas: ' + Number_of_Installments_per_year);
+    console.log('Numero Total de Cuotas: ' + TotalInstallments);
+    console.log('Cuota Inicial: ' + InitialInstallment);
+    console.log('Cuota Final: ' + FinalInstallment);
+    console.log('Monto del Prestamo: ' + LoanAmount);
+    console.log('Saldo a financiar con cuotas: ' + BalanceToFinanceWithInstallments);
+    console.log('% de Seguro desgrav. per.: ' + PercentageOfReliefInsurance);
+    console.log('Seguro riesgo: ' + RiskInsurance);
+    console.log('Intereses: ' + Interests);
+    console.log('Amortización del capital: ' + CapitalAmortization);
+    console.log('Seguro Desgravamen: ' + CreditInsurance);
+    console.log('Seguro contra todo Riesgo: ' + InsuranceAllRisk);
+    console.log('GPS: ' + GPS);
+    console.log('Portes: ' + ShippingCosts);
+    console.log('Gastos Administrativos: ' + AdministrativeExpenses);
+    console.log('Tasa de Descuento: ' + DiscountRate);
+    console.log('TIR: ' + TIR);
+    console.log('TCEA: ' + TCEA);
+    console.log('VAN: ' + VAN);
+
+   var mes = 36;
+    console.log("Saldo Inicial Cuota Final: " + this.InitialBalanceFinalInstallment[mes]);
+    console.log("Interes Cuota Final: " + this.FinalInstallmentInterest[mes]);
+    console.log("Amort. Cuota Final: " + this.FinalInstallmentAmortization[mes]);
+    console.log("Seguro desgav. Cuota Final: " + this.CreditInsuranceFinalInstallment[mes]);
+    console.log("Saldo Final Cuota Final: " + this.FinalBalanceFinalInstallment[mes]);
+    console.log("Saldo Inicial Cuota: " + this.InitialBalanceInstallment[mes]);
+    console.log("Interes: " + this.Interest[mes]);
+    console.log("Cuota (inc Seg Des): " + this.Installments[mes]);
+    console.log("Amort.: " + this.Amortization[mes]);
+    console.log("Seguro desg. Cuota: " + this.InsuranceCreditInstallment[mes]);
+    console.log("Seguro riesgo: " + this.RiskInsuranceTable[mes]);
+    console.log("GPS: " + this.GPSTable[mes]);
+    console.log("Portes: " + this.ShippingCostsTable[mes]);
+    console.log("Gastos Adm.: " + this.AdministrativeExpensesTable[mes]);
+    console.log("Saldo Final para Cuota: " + this.FinalBalanceInstallment[mes]);
+    console.log("Flujo: " + this.Flow[mes]);
+
+
     ////Pruebas
   }
 
