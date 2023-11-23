@@ -9,12 +9,13 @@
         <div class="form-group">
           <label for="interestRate">Interest Rate</label>
           <input
-            type="text"
-            class="form-control"
             id="interestRate"
+            class="form-control"
+            type="text"
+            title="The percentage at which interest is charged"
             required
-            (input)="updateForm()"
             formControlName="interestRate"
+            (input)="updateForm()"
           />
         </div>
         <div class="form-group">
@@ -23,6 +24,7 @@
             required
             id="interestType"
             class="form-control"
+            title="It represents the annual interest rate"
             formControlName="interestType"
             (input)="updateForm()"
           >
@@ -36,6 +38,7 @@
             required
             id="capitalization"
             class="form-control"
+            title="How often the interest is compounded"
             formControlName="capitalization"
             (input)="updateForm()"
           >
@@ -51,6 +54,7 @@
             required
             id="currencySign"
             class="form-control"
+            title="The unit of money used"
             formControlName="currencySign"
             (change)="changeCurrency()"
           >
@@ -60,21 +64,29 @@
         </div>
       </div>
       <div class="box">
-        <div class="info-item">
+        <div class="info-item" title="Discount Rate expressed as a percentage">
           <label for="discount_rate" class="info-label"
             >Tasa de Descuento:
           </label>
           <span class="info-value">{{ DiscountRatePorcentage }}%</span>
         </div>
-        <div class="info-item">
+        <div
+          class="info-item"
+          title="A financial metric representing the profitability of an investment"
+        >
           <label for="tir" class="info-label">TIR: </label>
           <span class="info-value">{{ TIRPorcentage }}%</span>
         </div>
         <div class="info-item">
-          <label for="tcea" class="info-label">TCEA: </label>
+          <label for="tcea" class="info-label" title="True cost of the loan"
+            >TCEA:
+          </label>
           <span class="info-value">{{ TCEAPorcentage }}%</span>
         </div>
-        <div class="info-item">
+        <div
+          class="info-item"
+          title="Difference between the present value of cash inflows and outflows"
+        >
           <label for="van" class="info-label">VAN: </label>
           <span class="info-value">{{
             (currencyType == "$" ? VANaux : VANaux * 3.72)
@@ -92,16 +104,18 @@
             id="notaryCosts"
             formControlName="notaryCosts"
             type="number"
+            title="Charges related to the services of a notary"
             [min]="0"
             class="form-control"
           />
         </div>
         <div class="form-group">
-          <label for="appraisal">Appraisal {{ currencyType }}</label>
+          <label for="appraisal">Appraisal fee {{ currencyType }}</label>
           <input
             id="appraisal"
             formControlName="appraisal"
             type="number"
+            title="The act or process of developing an opinion of value"
             [min]="0"
             class="form-control"
           />
@@ -114,6 +128,7 @@
             id="registrationCosts"
             formControlName="registrationCosts"
             type="number"
+            title="The act of registering a document with a government agency"
             [min]="0"
             class="form-control"
           />
@@ -124,6 +139,7 @@
             id="studyCommission"
             formControlName="studyCommission"
             type="number"
+            title="The act of studying a document with a government agency"
             [min]="0"
             class="form-control"
           />
