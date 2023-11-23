@@ -61,6 +61,22 @@ button {
   width: 100%;
 }
 
+.center {
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-item {
+  margin-bottom: 15px;
+  width: 300px;
+}
+
+.info-value {
+  padding-left: 10px;
+}
+
 .mat-column-demo-position {
   width: 32px;
   border-right: 1px solid currentColor;

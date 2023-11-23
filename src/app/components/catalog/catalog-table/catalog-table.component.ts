@@ -225,8 +225,6 @@ export class CatalogTableComponent {
 
   saveTable() {
     var id = localStorage.getItem('id');
-    console.log(JSON.stringify(this.smartPaymentAux));
-    // limit description size to 150 chracters
     this.smartPaymentAux.description = this.smartPaymentAux.description?.slice(
       0,
       150

@@ -5,7 +5,7 @@ import { SmartPayment } from 'src/app/model/smartPayment.model';
 import { FinanceTable } from 'src/app/model/financeTable.model';
 import { MatTable } from '@angular/material/table';
 import { PaymentService } from 'src/app/services/payment/payment.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,6 +18,7 @@ export class TableComponent {
   smartPaymentForm: FormGroup;
   smartPaymentAux = new SmartPayment();
   tableSaved = false;
+  currencyType = '$';
 
   displayedColumns: string[] = [
     'index',
@@ -39,79 +40,11 @@ export class TableComponent {
     private router: Router
   ) {
     this.smartPaymentAux = data.formValues;
-    // console.log(
-    //   'new SmartPayment(' +
-    //     '1,' +
-    //     "'name'," +
-    //     "'description'," +
-    //     "'image'," +
-    //     this.smartPaymentAux.sellingPriceAsset +
-    //     ',' +
-    //     this.smartPaymentAux.paymentPlanType +
-    //     ',' +
-    //     this.smartPaymentAux.initialInstallment +
-    //     ',' +
-    //     this.smartPaymentAux.finalInstallment +
-    //     ',' +
-    //     this.smartPaymentAux.interestRate +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.interestType +
-    //     "'" +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.capitalization +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.paymentFrequency +
-    //     ',' +
-    //     this.smartPaymentAux.notaryCosts +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.notaryCostsType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.registrationCosts +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.registrationCostsType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.appraisal +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.appraisalType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.studyCommission +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.studyCommissionType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.activationCommission +
-    //     ',' +
-    //     "'" +
-    //     this.smartPaymentAux.activationCommissionType +
-    //     "'" +
-    //     ',' +
-    //     this.smartPaymentAux.gps +
-    //     ',' +
-    //     this.smartPaymentAux.shippingCosts +
-    //     ',' +
-    //     this.smartPaymentAux.administrativeExpenses +
-    //     ',' +
-    //     this.smartPaymentAux.lifeInsurance +
-    //     ',' +
-    //     this.smartPaymentAux.riskInsurance +
-    //     ',' +
-    //     this.smartPaymentAux.discountRate +
-    //     ')'
-    // );
     this.smartPaymentForm = this.fb.group({
       name: [this.smartPaymentAux.name],
       description: [this.smartPaymentAux.description],
       image: [this.smartPaymentAux.image],
+      currencySign: [this.currencyType, Validators.required],
     });
   }
 
@@ -144,6 +77,76 @@ export class TableComponent {
     this.table?.renderRows();
   }
 
+  changeCurrency() {
+    if (this.currencyType == this.smartPaymentForm.get('currencySign')?.value)
+      return;
+    if (this.smartPaymentForm.get('currencySign')?.value == '$') {
+      this.smartPaymentForm
+        .get('notaryCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('notaryCosts')?.value) / 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('registrationCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('registrationCosts')?.value) /
+            3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('appraisal')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('appraisal')?.value) / 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('studyCommission')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('studyCommission')?.value) /
+            3.72
+          ).toFixed(2)
+        );
+    } else {
+      this.smartPaymentForm
+        .get('notaryCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('notaryCosts')?.value) * 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('registrationCosts')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('registrationCosts')?.value) *
+            3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('appraisal')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('appraisal')?.value) * 3.72
+          ).toFixed(2)
+        );
+      this.smartPaymentForm
+        .get('studyCommission')
+        ?.setValue(
+          (
+            parseFloat(this.smartPaymentForm.get('studyCommission')?.value) *
+            3.72
+          ).toFixed(2)
+        );
+    }
+
+    this.updateTable();
+  }
+
   updateTable() {
     for (let index = 0; index < this.dataSource.length; index++) {
       const element = this.dataSource[index].gp;
@@ -173,6 +176,7 @@ export class TableComponent {
       element.gp = this.List_of_Grace_Periods[index];
       this.dataSource.push(element);
     }
+    this.currencyType = this.smartPaymentForm.get('currencySign')?.value;
     this.table?.renderRows();
   }
 
@@ -296,6 +300,17 @@ export class TableComponent {
   //Flujo
   Flow: number[] = []; ///////////////////////////
 
+  //Indicadores de Rentabilidad
+  //TIR
+  DiscountRate: number = 0;
+  DiscountRatePorcentage: number = 0;
+  TIR: number = 0;
+  TIRPorcentage: number = 0;
+  TCEA: number = 0;
+  TCEAPorcentage: number = 0;
+  VAN: number = 0;
+  VANaux: number = 0;
+
   // Algoritmos
   Algorithm() {
     //TEA
@@ -408,15 +423,21 @@ export class TableComponent {
       this.smartPaymentAux.discountRate!,
       this.smartPaymentAux.paymentFrequency!
     );
+    this.DiscountRatePorcentage = parseFloat(
+      (this.DiscountRate * 100).toFixed(7)
+    );
 
     //TIR
-    var TIR = this.getTIR(LoanAmount);
+    this.TIR = this.getTIR(LoanAmount);
+    this.TIRPorcentage = parseFloat((this.TIR * 100).toFixed(7));
 
     //TCEA
-    var TCEA = this.getTCEA(TIR, this.smartPaymentAux.paymentFrequency!);
+    this.TCEA = this.getTCEA(this.TIR, this.smartPaymentAux.paymentFrequency!);
+    this.TCEAPorcentage = parseFloat((this.TCEA * 100).toFixed(7));
 
     //VAN
-    var VAN = this.getVAN(LoanAmount, DiscountRate);
+    this.VAN = this.getVAN(LoanAmount, this.DiscountRate);
+    this.VANaux = parseFloat(this.VAN.toFixed(2));
 
     /*     const flujosEfectivo = [-1000, 200, 300, 400, 500];
     const npvCalculado = flujosEfectivo.reduce((npv, flujo, t) => npv + (flujo / Math.pow(1 + 0.10, t)), 0);
