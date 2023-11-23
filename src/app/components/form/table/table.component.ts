@@ -446,6 +446,29 @@ export class TableComponent {
     console.log("NPV Calculado con financial library: ", npvBiblioteca); */
 
     ////Pruebas
+    console.log('TEA: ' + TEA);
+    console.log('TEP: ' + TEP);
+    console.log('Numero de Cuotas: ' + Number_of_Installments_per_year);
+    console.log('Numero Total de Cuotas: ' + TotalInstallments);
+    console.log('Cuota Inicial: ' + InitialInstallment);
+    console.log('Cuota Final: ' + FinalInstallment);
+    console.log('Monto del Prestamo: ' + LoanAmount);
+    console.log(
+      'Saldo a financiar con cuotas: ' + BalanceToFinanceWithInstallments
+    );
+    console.log('% de Seguro desgrav. per.: ' + PercentageOfReliefInsurance);
+    console.log('Seguro riesgo: ' + RiskInsurance);
+    console.log('Intereses: ' + Interests);
+    console.log('Amortización del capital: ' + CapitalAmortization);
+    console.log('Seguro Desgravamen: ' + CreditInsurance);
+    console.log('Seguro contra todo Riesgo: ' + InsuranceAllRisk);
+    console.log('GPS: ' + GPS);
+    console.log('Portes: ' + ShippingCosts);
+    console.log('Gastos Administrativos: ' + AdministrativeExpenses);
+    console.log('Tasa de Descuento: ' + DiscountRate);
+    console.log('TIR: ' + this.TIR);
+    console.log('TCEA: ' + this.TCEA);
+    console.log('VAN: ' + this.VAN);
   }
 
   GetTEA(interestType: String, interestRate: number, capitalization: String) {
